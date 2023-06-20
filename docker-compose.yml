@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  mariadb_container:
+    build:
+      context: ./MariaDB/
+      dockerfile: Dockerfile
+    networks:
+      - mynetwork
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=lol
+    container_name: mariadb_container
+  
+  mycontainer:
+    build:
+      context: ./API/
+      dockerfile: Dockerfile
+    networks:
+      - mynetwork
+    ports:
+      - "80:80"
+    container_name: mycontainer
+
+ 
+
+networks:
+  mynetwork:
