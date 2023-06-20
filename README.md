@@ -1,6 +1,5 @@
 # Astrolabium-API2
 
-
 ## Requirements
 Git \
 Docker
@@ -28,41 +27,29 @@ git config --global user.email thebaultyoann@gmail.com
 ```
 
 ## Install Docker
-Set up the repository
+Install Docker
 ```Shell
-sudo apt-get update
-sudo apt-get install ca-certificates curl gnupg
+sudo apt update
+sudo apt install docker.io
 ```
+Launch Docker
 ```Shell
-sudo install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-sudo chmod a+r /etc/apt/keyrings/docker.gpg
+sudo systemctl start docker
+sudo systemctl enable docker
 ```
+Install Docker Compose
 ```Shell
-echo \
-  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt install curl
+sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
 ```
-Install Docker Repository
-```Shell
-sudo apt-get update
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-```
-Check that its really installed 
-```Shell
-sudo docker run hello-world
-```
-Run the YAML file 
 
 ## Pull the project from GitHub Repository
 
 Upload the project 
 ```Shell 
-mkdir Astrolabium
-cd Astrolabium
-git remote add origin https://github.com/Linker175/Astrolabium-API2.git
-git branch -M main
+git clone https://github.com/Linker175/Astrolabium-API2.git
+cd Astrolabium-API2
 ```
 
 ## Run the YAML file
@@ -71,5 +58,23 @@ Place yourself in the right folder and...
 Run the file inside docker
 ```Shell
 docker-compose up -d  
+```
+
+## In the case you want to check the state of the dockers
+```
+docker ps -a 
+//if status up : running, if status down : stopped
+```
+## In the case you want to relauch the docker 
+```
+//for the API
+sudo docker start mycontainer 
+//for the MariaDB
+sudo docker start mariaDB
+```
+
+## In the case you want to check the logs of a docker (its terminal)
+```
+sudo docker logs {container_name} 
 ```
 
