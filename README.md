@@ -1,12 +1,12 @@
 # Astrolabium-API2
 
 ## Requirements
-Git 
+Git \
 Docker
 
 ## Installation Steps
 Install Git
-- Pull the project from GitHup Repository
+- Pull the project from GitHup Repository \
 Install Docker
 - Run the YAML File
 
@@ -34,7 +34,7 @@ git remote add origin https://github.com/Linker175/Astrolabium-API2.git
 git branch -M main
 ```
 
-##Install Docker##
+## Install Docker
 Set up the repository
 ```
 #Shell
