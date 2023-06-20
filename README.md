@@ -1,14 +1,17 @@
 # Astrolabium-API2
 
+
 ## Requirements
 Git \
 Docker
 
+If you already have those, you can skip the two first steps
+
 ## Installation Steps
 Install Git
-- Pull the project from GitHup Repository
-
 Install Docker
+
+- Pull the project from GitHub Repository
 - Run the YAML File
 
 ## Install Git 
@@ -18,18 +21,10 @@ On Linux
 sudo apt-get update
 sudo apt-get install git
 ```
-Init Git
+Initialise Git
 ```Shell
 git config --global user.name "Yoann Thébault"
 git config --global user.email thebaultyoann@gmail.com
-```
-
-Upload the project 
-```Shell 
-mkdir Astrolabium
-cd Astrolabium
-git remote add origin https://github.com/Linker175/Astrolabium-API2.git
-git branch -M main
 ```
 
 ## Install Docker
@@ -58,3 +53,23 @@ Check that its really installed
 ```Shell
 sudo docker run hello-world
 ```
+Run the YAML file 
+
+## Pull the project from GitHub Repository
+
+Upload the project 
+```Shell 
+mkdir Astrolabium
+cd Astrolabium
+git remote add origin https://github.com/Linker175/Astrolabium-API2.git
+git branch -M main
+```
+
+## Run the YAML file
+
+Place yourself in the right folder and...
+Run the file inside docker
+```Shell
+docker-compose up -d  
+```
+
