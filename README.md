@@ -78,3 +78,10 @@ sudo docker start mariaDB
 sudo docker logs {container_name} 
 ```
 
+# How it works 
+
+If you run it locally
+- localhost/docs
+
+Or if you have a external IP and your server is open to the web
+- yourip/docs
