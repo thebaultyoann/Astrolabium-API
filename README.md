@@ -7,7 +7,7 @@ Docker
 ## Installation Steps
 Install Git
 - Pull the project from GitHup Repository  
-Install Docker
+\Install Docker
 - Run the YAML File
 
 ## Install Git 
