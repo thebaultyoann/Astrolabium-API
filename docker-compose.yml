@@ -44,7 +44,6 @@ services:
       - 'traefik.http.routers.fastapi.entrypoints=web'
       - 'traefik.http.routers.fastapi.service=fastapi'
       - 'traefik.http.services.fastapi.loadbalancer.server.port=8000'
-
     container_name: fastapi
     depends_on:
       - mariadb1
