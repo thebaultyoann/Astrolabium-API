@@ -9,24 +9,12 @@ services:
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
-      - "--entrypoints.web.http.redirections.entryPoint.to=web-secure"
-      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
-      - "--entrypoints.web-secure.address=:443"
-      - "--certificatesresolvers.letsencrypt.acme.email=thebaultyoann56@gmail.com"
-      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
-      - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
-      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
-      - "--certificatesresolvers.letsencrypt.acme.dnschallenge=false"
-      - "--certificatesresolvers.letsencrypt.acme.caserver=https://acme-v02.api.letsencrypt.org/directory"
     ports:
       - "80:80"
       - "443:443"
       - "8080:8080"
     volumes:
-      - "./letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-    networks:
-      - mynetwork
 
 
   mariadb:
@@ -51,8 +39,6 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.api.rule=Host(`api.local`)"
       - "traefik.http.services.api.loadbalancer.server.port=80"
-    ports: 
-      - "3333:80"
     container_name: api
     depends_on:
       - mariadb
