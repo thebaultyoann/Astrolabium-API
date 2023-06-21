@@ -40,7 +40,7 @@ services:
       - databasenetwork
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.fastapi.rule=Host(`localhost`)'
+      - 'traefik.http.routers.fastapi.rule=Host(`api.13.51.109.158`)'
       - 'traefik.http.services.fastapi.loadbalancer.server.port=8000'
     container_name: fastapi
     depends_on:
