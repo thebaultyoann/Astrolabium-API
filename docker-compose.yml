@@ -13,10 +13,6 @@ services:
       - "80:80"
       - "443:443"
       - "8080:8080"
-    labels:
-      - 'traefik.enable=true'
-      - 'traefik.http.routers.api.rule=Host(`traefik.localhost`)'
-      - 'traefik.http.routers.api.service=api@internal'
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
@@ -41,7 +37,7 @@ services:
       - databasenetwork
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.fastapi.rule=Host(`fastapi.localhost`)'
+      - 'traefik.http.routers.fastapi.rule=Host(`localhost`)'
       - 'traefik.http.services.fastapi.loadbalancer.server.port=8000'
     container_name: fastapi
     depends_on:
