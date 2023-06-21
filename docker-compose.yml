@@ -52,5 +52,6 @@ services:
       - mariadb_container
     command: bash -c "sleep 10 && uvicorn app.main:app --host 0.0.0.0 --port 80"
     restart: "on-failure:5"
+    port: "8080:80"
 networks:
   mynetwork:
