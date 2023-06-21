@@ -40,8 +40,11 @@ services:
       - databasenetwork
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.fastapi.rule=Host(`api.13.51.109.158`)'
+      - 'traefik.http.routers.fastapi.rule=PathPrefix(`/api`)'
+      - 'traefik.http.routers.fastapi.entrypoints=web'
+      - 'traefik.http.routers.fastapi.service=fastapi'
       - 'traefik.http.services.fastapi.loadbalancer.server.port=8000'
+
     container_name: fastapi
     depends_on:
       - mariadb1
