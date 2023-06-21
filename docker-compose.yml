@@ -26,7 +26,7 @@ services:
       context: ./MariaDB/
       dockerfile: Dockerfile
     networks:
-      - mynetwork
+      - databasenetwork
     ports:
       - "3306:3306"
     environment:
@@ -38,15 +38,15 @@ services:
       context: ./API/
       dockerfile: Dockerfile
     networks:
-      - mynetwork
+      - databasenetwork
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.fastapi.rule=Host(`fastapi.localhost`)'
       - 'traefik.http.services.fastapi.loadbalancer.server.port=8000'
     container_name: fastapi
     depends_on:
-      - mariadb
+      - mariadb1
     command: bash -c "sleep 10 && uvicorn app.main:app --host 0.0.0.0 --port 8000"
     restart: "on-failure:5"
 networks:
-  mynetwork:
+  databasenetwork:
