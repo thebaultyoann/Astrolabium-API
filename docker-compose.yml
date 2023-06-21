@@ -55,7 +55,7 @@ services:
       - "3333:80"
     container_name: api
     depends_on:
-      - mariadb_container
+      - mariadb
     command: bash -c "sleep 10 && uvicorn app.main:app --host 0.0.0.0 --port 80"
     restart: "on-failure:5"
 networks:
