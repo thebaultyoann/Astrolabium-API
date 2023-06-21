@@ -47,7 +47,8 @@ services:
       dockerfile: Dockerfile
     networks:
       - mynetwork
-    ports: "8080:80"
+    ports: 
+      - "8080:80"
     container_name: mycontainer
     depends_on:
       - mariadb_container
