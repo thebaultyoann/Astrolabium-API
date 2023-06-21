@@ -12,10 +12,11 @@ services:
       - "--entrypoints.web.http.redirections.entryPoint.to=web-secure"
       - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
       - "--entrypoints.web-secure.address=:443"
-      - "--certificatesresolvers.letsencrypt.acme.email=yolinker56@gmail.com"
+      - "--certificatesresolvers.letsencrypt.acme.email=<your-email>"
       - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
       - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
       - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.tls=false"
       - "--certificatesresolvers.letsencrypt.acme.dnschallenge=false"
       - "--certificatesresolvers.letsencrypt.acme.caserver=https://acme-v02.api.letsencrypt.org/directory"
     ports:
@@ -24,6 +25,8 @@ services:
     volumes:
       - "./letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    networks:
+      - mynetwork
 
 
   mariadb_container:
@@ -44,8 +47,6 @@ services:
       dockerfile: Dockerfile
     networks:
       - mynetwork
-    ports:
-      - "8080:80"
     container_name: mycontainer
     depends_on:
       - mariadb_container
