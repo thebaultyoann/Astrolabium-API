@@ -19,6 +19,8 @@ services:
       - "--certificatesresolvers.letsencrypt.acme.httpchallenge.tls=false"
       - "--certificatesresolvers.letsencrypt.acme.dnschallenge=false"
       - "--certificatesresolvers.letsencrypt.acme.caserver=https://acme-v02.api.letsencrypt.org/directory"
+      - "--entrypoints.web.http.tls=true"
+      - "--entrypoints.web-secure.http.tls.certresolver=letsencrypt"
     ports:
       - "80:80"
       - "443:443"
