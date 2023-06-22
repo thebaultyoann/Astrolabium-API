@@ -15,7 +15,7 @@ services:
       - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
       - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
       - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
-      - "--certificatesresolvers.myresolver.acme.email=thebaultyoann56@gmail.com"
+      - "--certificatesresolvers.myresolver.acme.email=${EMAIL}"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     ports:
       - "443:443"
@@ -24,9 +24,9 @@ services:
     volumes:
       - "./letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-
-
-
+    environment:
+      - EMAIL=your-email@example.com
+      
   mariadb1:
     build:
       context: ./MariaDB/
@@ -48,7 +48,7 @@ services:
       - traefiknetwork
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.fastapi.rule=Host(`astrolabium.ddns.net`) && PathPrefix(`/`)'
+      - 'traefik.http.routers.fastapi.rule=Host(`DOMAIN_NAME`) && PathPrefix(`/`)'
       - 'traefik.http.routers.fastapi.entrypoints=websecure'
       - "traefik.http.routers.fastapi.tls.certresolver=myresolver"
       - 'traefik.http.routers.fastapi.tls=true'
@@ -58,6 +58,8 @@ services:
       - mariadb1
     command: bash -c "sleep 10 && uvicorn app.main:app --host 0.0.0.0 --port 8000"
     restart: "on-failure:5"
+    environment:
+      - DOMAIN_NAME=yourdomainename.com
 networks:
   databasenetwork:
   traefiknetwork:
