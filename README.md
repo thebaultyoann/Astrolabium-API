@@ -20,12 +20,6 @@ On Linux
 sudo apt-get update
 sudo apt-get install git
 ```
-Initialise Git
-```Shell
-git config --global user.name "Yoann Thébault"
-git config --global user.email thebaultyoann@gmail.com
-```
-
 ## Install Docker
 Install Docker
 ```Shell
