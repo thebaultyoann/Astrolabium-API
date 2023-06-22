@@ -53,6 +53,8 @@ Run the file inside docker
 ```Shell
 docker-compose up -d -e DOMAIN_NAME=yourdomainname.com -e EMAIL=youradressemail@example.com
 ```
+The domain name is used to get the SSL/TLS Certificates throught LetsEncrypt challenges with HTTP and TCP.
+The mail adress is only here to get notifications from LetsEncrypt for things such as certificate renewal and issues
 
 ## Some usefull docker commands
 ### Check status of the containers
