@@ -51,7 +51,7 @@ cd Astrolabium-API2
 Place yourself in the right folder and...
 Run the file inside docker
 ```Shell
-docker-compose up -d  
+docker-compose up -d -e DOMAIN_NAME=yourdomainname.com -e EMAIL=youradressemail@example.com
 ```
 
 ## Some usefull docker commands
