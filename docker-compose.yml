@@ -50,7 +50,6 @@ services:
     labels:
       - 'traefik.enable=true'
       - 'traefik.http.routers.fastapi.rule=Host(`astrolabium.ddns.net`)'
-      - 'traefik.http.routers.fastapi.rule=Path(`/`)'
       - 'traefik.http.routers.fastapi.entrypoints=websecure'
       - 'traefik.http.routers.fastapi.tls=true'
       - 'traefik.http.services.fastapi.loadbalancer.server.port=80'
