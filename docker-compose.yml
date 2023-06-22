@@ -48,7 +48,7 @@ services:
       - traefiknetwork
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.fastapi.rule=Host(`astrolabium.myddns.me`)  && PathPrefix(`/`)'
+      - 'traefik.http.routers.fastapi.rule=Host(`astrolabium.dnsking.com`) && PathPrefix(`/`)'
       - 'traefik.http.routers.fastapi.entrypoints=websecure'
       - "traefik.http.routers.fastapi.tls.certresolver=myresolver"
       - 'traefik.http.routers.fastapi.tls=true'
