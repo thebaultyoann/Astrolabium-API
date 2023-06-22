@@ -12,9 +12,12 @@ services:
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.email=thebaultyoann56@gmail.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/acme.json"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
     ports:
       - "80:80"
       - "443:443"
@@ -46,9 +49,9 @@ services:
       - traefiknetwork
     labels:
       - 'traefik.enable=true'
-      - 'traefik.http.routers.fastapi.rule=PathPrefix(`/`)'
-      - 'traefik.http.routers.fastapi.entrypoints=web'
-      - 'traefik.http.routers.fastapi.service=fastapi'
+      - 'traefik.http.routers.fastapi.rule=Host(`astrolabium.ddns.net`)'
+      - 'traefik.http.routers.fastapi.entrypoints=websecure'
+      - 'traefik.http.routers.fastapi.tls=true'
       - 'traefik.http.services.fastapi.loadbalancer.server.port=8000'
     container_name: fastapi
     depends_on:
