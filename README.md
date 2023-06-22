@@ -54,28 +54,21 @@ Run the file inside docker
 docker-compose up -d  
 ```
 
-## In the case you want to check the state of the dockers
+## Some usefull docker commands
+### Check status of the containers
 ```
 docker ps -a 
 //if status up : running, if status down : stopped
 ```
-## In the case you want to relauch the docker 
+
+### Get container logs
 ```
-//for the API
-sudo docker start mycontainer 
-//for the MariaDB
-sudo docker start mariaDB
+docker logs {container name} 
 ```
 
-## In the case you want to check the logs of a docker (its terminal)
+## Stop/Start/Delete a container
 ```
-sudo docker logs {container_name} 
+sudo docker stop {dockername}
+sudo docker start {dockername}
+sudo docker rm {dockername}
 ```
-
-# How it works 
-
-If you run it locally
-- localhost/docs
-
-Or if you have a external IP and your server is open to the web
-- yourip/docs
