@@ -6,7 +6,7 @@ from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 from typing import Annotated
 from jose import JWTError, jwt
-from app.db import get_db
+from app.db import get_db_Users
 import app.crud as crud
 import app.schema as schema
 
@@ -55,7 +55,7 @@ def change_password(old_plain_password:str, new_password_hashed:str, username:st
     return False
 
 #Authentification functions 
-async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db:Session = Depends(get_db)):
+async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db:Session = Depends(get_db_Users)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
