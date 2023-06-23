@@ -33,6 +33,6 @@ delete_user() {
 create_user_with_read_write 'admin' 'password1' 'astrolabium'
 create_user_with_read_write 'admin' 'password1' 'users'
 create_user_with_read_only 'reader' 'password2' 'astrolabium'
-create_user_with_read_only 'reader' 'password2' 'astrolabium'
+create_user_with_read_only 'reader' 'password2' 'users'
 
 

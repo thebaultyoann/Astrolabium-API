@@ -1,5 +1,5 @@
-DBUserForAPI="root"
-DBPasswordForAPI="lol"
+DBUserForAPI="reader"
+DBPasswordForAPI="password2"
 DBContainerName="mariadb"
 DBNameForAPI="astrolabium"
 DBNameForUsers="astrolabium"
