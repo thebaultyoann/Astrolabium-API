@@ -1,6 +1,6 @@
 DBUserForAPI="root"
 DBPasswordForAPI="lol"
-DBContainerName="mariadb1"
+DBContainerName="mariadb"
 DBNameForAPI="astrolabium"
 DBNameForUsers="astrolabium"
 
