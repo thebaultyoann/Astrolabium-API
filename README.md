@@ -48,13 +48,20 @@ cd Astrolabium-API2
 
 ## Run the YAML file
 
+
+
 Place yourself in the right folder and...
-Run the file inside docker
-```Shell
-docker-compose up -d -e DOMAIN_NAME=yourdomainname.com -e EMAIL=youradressemail@example.com
-```
+Edit the YAML file to remplace with your domain name and mail adress.
 The domain name is used to get the SSL/TLS Certificates throught LetsEncrypt challenges with HTTP and TCP.
 The mail adress is only here to get notifications from LetsEncrypt for things such as certificate renewal and issues
+```Shell
+Nano docker-file.yml
+```
+
+Run the file inside docker
+```Shell
+docker-compose up -d
+```
 
 ## Some usefull docker commands
 ### Check status of the containers
