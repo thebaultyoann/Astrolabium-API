@@ -79,7 +79,7 @@ docker logs {container name}
 
 ## Stop/Start/Delete a container
 ```
-sudo docker stop {dockername}
-sudo docker start {dockername}
-sudo docker rm {dockername}
+sudo docker stop {dockername1} {dockername2} ... 
+sudo docker start {dockername1} {dockername2} ... 
+sudo docker rm {dockername1} {dockername2} ... 
 ```
