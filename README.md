@@ -57,7 +57,7 @@ Edit the YAML file to remplace with your domain name and mail adress.
 The domain name is used to get the SSL/TLS Certificates throught LetsEncrypt challenges with HTTP and TCP.
 The mail adress is only here to get notifications from LetsEncrypt for things such as certificate renewal and issues
 ```Shell
-Nano docker-file.yml
+nano docker-file.yml
 ```
 
 Run the file inside docker
