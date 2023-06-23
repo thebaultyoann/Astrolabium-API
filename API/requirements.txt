@@ -3,6 +3,7 @@ sqlalchemy>=2.0.15
 python-jose[cryptography]>=3.3.0
 passlib[bcrypt]>=1.7.4
 uvicorn>=0.22.0
+mariadb>=1.1.6
 python-multipart
 
 
