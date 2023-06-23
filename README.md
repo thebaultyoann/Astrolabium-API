@@ -51,7 +51,9 @@ cd Astrolabium-API2
 
 
 Place yourself in the right folder and...
+
 Edit the YAML file to remplace with your domain name and mail adress.
+
 The domain name is used to get the SSL/TLS Certificates throught LetsEncrypt challenges with HTTP and TCP.
 The mail adress is only here to get notifications from LetsEncrypt for things such as certificate renewal and issues
 ```Shell
