@@ -46,6 +46,7 @@ services:
       - traefiknetwork
     labels:
       - 'traefik.enable=true'
+      ####################################### insert your domain name here ################
       - 'traefik.http.routers.fastapi.rule=Host(`astrolabium.gotdns.ch`) && PathPrefix(`/`)'
       - 'traefik.http.routers.fastapi.entrypoints=websecure'
       - "traefik.http.routers.fastapi.tls.certresolver=myresolver"
