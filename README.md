@@ -69,6 +69,11 @@ Run the file inside docker
 docker-compose up -d
 ```
 
+Run the creation of the users for mariadb
+```Shell
+./database_user.sh
+```
+
 Go delete mariadb root password from the two files : 
 ```Shell
 nano docker-compose.yml
