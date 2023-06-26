@@ -1,38 +1,34 @@
 #!/bin/bash
 
-password="lol"
+#input here the mariadb root password, then delete it from this file
+$mariadbrootpassword="lol"
 
-# Création d'un utilisateur avec des autorisations en lecture et écriture
-create_user_with_read_write() {
-    local username=$1
-    local password=$2
-    local database=$3
+#Get the data from the Python file to access the variables
+source config.py
 
-    docker exec -i mariadb mysql -uroot -p${password} -e "CREATE USER '${username}'@'%' IDENTIFIED BY '${password}'"
-    docker exec -i mariadb mysql -uroot -p${password} -e "GRANT SELECT, INSERT, UPDATE, DELETE ON ${database}.* TO '${username}'@'%'"
-}
+#User
+echo "DB_Username_For_API:$DB_Username_For_API"
+echo "DB_Password_For_API:$DB_Password_For_API"
 
-# Création d'un utilisateur avec des autorisations en lecture seulement
-create_user_with_read_only() {
-    local username=$1
-    local password=$2
-    local database=$3
+#Admin
+echo "DB_User_For_Admin: $DB_User_For_Admin"
+echo "DB_Password_For_Admin: $DB_Password_For_Admin"
 
-    docker exec -i mariadb mysql -uroot -p${password} -e "CREATE USER '${username}'@'%' IDENTIFIED BY '${password}'"
-    docker exec -i mariadb mysql -uroot -p${password} -e "GRANT SELECT ON ${database}.* TO '${username}'@'%'"
-}
+#databases
+echo "DB_Name_For_API: $DB_Name_For_API"
+echo "DB_Name_For_Users: $DB_Name_For_Users"
 
-# Suppression d'un utilisateur
-delete_user() {
-    local username=$1
+#update users inside mariadb
 
-    docker exec -i mariadb mysql -uroot -p${password} -e "DROP USER '${username}'@'%'"
-}
+docker exec -i mariadb mariadb -u root -p$mariadbrootpassword <<EOF
+CREATE USER '$DB_Username_For_API'@'%' IDENTIFIED BY '$DB_Password_For_API';
+GRANT SELECT ON $DB_Name_For_API.* TO '$DB_Username_For_API'@'%';
+GRANT SELECT ON $DB_Name_For_Users.* TO '$DB_Username_For_API'@'%';
+EOF
 
-# Exemples d'utilisation
-create_user_with_read_write 'admin' 'password1' 'astrolabium'
-create_user_with_read_write 'admin' 'password1' 'users'
-create_user_with_read_only 'reader' 'password2' 'astrolabium'
-create_user_with_read_only 'reader' 'password2' 'users'
-
+docker exec -i mariadb mariadb -u root -p$mariadbrootpassword <<EOF
+CREATE USER '$DB_User_For_Admin'@'%' IDENTIFIED BY '$DB_Password_For_Admin';
+GRANT SELECT ON $DB_Name_For_API.* TO '$DB_User_For_Admin'@'%';
+GRANT SELECT ON $DB_Name_For_Users.* TO '$DB_User_For_Admin'@'%';
+EOF
 
