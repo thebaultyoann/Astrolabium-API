@@ -3,10 +3,10 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import sys
 sys.path.append('../../')
-from variables import DBUserForAPI, DBPasswordForAPI, DBContainerName, DBNameForAPI, DBNameForUsers
+from variables import DB_Username_For_API, DB_Password_For_API, DB_Container_Name, DB_Name_For_API, DB_Name_For_Users
 
-engineAPI = create_engine("mariadb+mariadbconnector://"+DBUserForAPI+":"+DBPasswordForAPI+"@"+DBContainerName+":3306/"+DBNameForAPI)
-engineUsers = create_engine("mariadb+mariadbconnector://"+DBUserForAPI+":"+DBPasswordForAPI+"@"+DBContainerName+":3306/"+DBNameForUsers)
+engineAPI = create_engine("mariadb+mariadbconnector://"+DB_Username_For_API+":"+DB_Password_For_API+"@"+DB_Container_Name+":3306/"+DB_Name_For_API)
+engineUsers = create_engine("mariadb+mariadbconnector://"+DB_Username_For_API+":"+DB_Password_For_API+"@"+DB_Container_Name+":3306/"+DB_Name_For_Users)
 SessionLocalAPI = sessionmaker(autocommit=False, autoflush=False, bind=engineAPI)
 SessionLocalUsers = sessionmaker(autocommit=False, autoflush=False, bind=engineUsers)
 Base = declarative_base()
