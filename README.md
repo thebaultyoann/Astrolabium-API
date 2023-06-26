@@ -48,8 +48,6 @@ cd Astrolabium-API2
 
 ## Run the YAML file
 
-
-
 Place yourself in the right folder and...
 
 Edit the YAML file to remplace with your domain name, mail adress and the root password for the MariaDB Container. **Remember to delete the root password from the file afterwards!** .
@@ -60,9 +58,23 @@ The mail adress is only here to get notifications from LetsEncrypt for things su
 nano docker-compose.yml
 ```
 
+Edit then everything you need inside (username/password that you want for the users inside the database, generate the random key...) **Remember to delete the root password for mariadb from the file afterwards!**
+
+```Shell 
+nano docker-compose.yml
+```
+
 Run the file inside docker
 ```Shell
 docker-compose up -d
+```
+
+Go delete mariadb root password from the two files : 
+```Shell
+nano docker-compose.yml
+```
+```Shell
+nano variables.py
 ```
 
 ## Some usefull docker commands

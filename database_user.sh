@@ -1,10 +1,10 @@
 #!/bin/bash
 
-#input here the mariadb root password, then delete it from this file
-$mariadbrootpassword="lol"
-
 #Get the data from the Python file to access the variables
 source config.py
+
+#MariaDBrootpassword
+echo "Mariadb_Root_Password:$Mariadb_Root_Password"
 
 #User
 echo "DB_Username_For_API:$DB_Username_For_API"
