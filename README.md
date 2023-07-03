@@ -50,7 +50,7 @@ cd Astrolabium-API2
 
 Place yourself in the right folder and...
 
-Edit the YAML file to replace with your domain name, mail adress and the root password for the MariaDB Container. **Remember to delete the root password from the file afterwards!** .
+Edit the YAML file to replace with your IOAZRLZALERJ test domain name, mail adress and the root password for the MariaDB Container. **Remember to delete the root password from the file afterwards!** .
 
 The domain name is used to get the SSL/TLS Certificates throught LetsEncrypt challenges with HTTP and TCP.
 The mail adress is only here to get notifications from LetsEncrypt for things such as certificate renewal and issues
