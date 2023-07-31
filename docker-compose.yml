@@ -16,10 +16,6 @@ services:
       ################################################ insert your email here ################
       - "--certificatesresolvers.myresolver.acme.email=thebaultyoann56@gmail.com"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
-    ports:
-      - "443:443"
-      - "80:80"
-      - "8080:8080"
     volumes:
       - "./letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
@@ -62,4 +58,3 @@ services:
 
 networks:
   databasenetwork:
-  traefiknetwork:
