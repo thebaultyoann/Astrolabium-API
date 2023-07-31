@@ -7,17 +7,24 @@ services:
     networks:
       - traefiknetwork
     command:
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      #- "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
-      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
-      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
-      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
-      ################################################# insert your email here ################
-      - "--certificatesresolvers.myresolver.acme.email=thebaultyoann56@gmail.com"
-      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.entrypoints=web-secure"
+      - "traefik.http.routers.traefik.rule=Host(`astrolabium.gotdns.ch`)"
+      - "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.http.routers.traefik.tls.certresolver=tlschallenge"
+      - "traefik.http.routers.traefik.entrypoints=web-secure"
+      - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+      # - "--api.insecure=true"
+      # - "--providers.docker=true"
+      # - "--providers.docker.exposedbydefault=false"
+      # - "--entrypoints.web.address=:80"
+      # - "--entrypoints.websecure.address=:443"
+      # - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
+      # - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+      # - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      # ################################################# insert your email here ################
+      # - "--certificatesresolvers.myresolver.acme.email=thebaultyoann56@gmail.com"
+      # - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     ports:
       - "443:443"
       - "80:80"
@@ -50,11 +57,17 @@ services:
       - traefiknetwork
     labels:
       - 'traefik.enable=true'
+      - "traefik.http.routers.fastapi.entrypoints=web-secure"
+      - "traefik.http.routers.fastapi.rule=Host(`astrolabium.gotdns.ch`)" # change hostname!
+      - "traefik.http.routers.fastapi.tls=true"
+      - "traefik.http.routers.fastapi.tls.certresolver=tlschallenge"
+      - "traefik.http.routers.fastapi.middlewares=secHeaders@file"
+      - "traefik.http.services.fastapi.loadbalancer.server.port=8000" # 
       ####################################### insert your domain name here ################
-      - 'traefik.http.routers.fastapi.rule=Host(`astrolabium.gotdns.ch`) && PathPrefix(`/`)'
-      - 'traefik.http.routers.fastapi.tls=true'
-      - "traefik.http.routers.fastapi.tls.certresolver=myresolver"
-      - 'traefik.http.services.fastapi.loadbalancer.server.port=8000'
+      # - 'traefik.http.routers.fastapi.rule=Host(`astrolabium.gotdns.ch`) && PathPrefix(`/`)'
+      # - 'traefik.http.routers.fastapi.tls=true'
+      # - "traefik.http.routers.fastapi.tls.certresolver=myresolver"
+      # - 'traefik.http.services.fastapi.loadbalancer.server.port=8000'
     container_name: fastapi
     depends_on:
       - mariadb
