@@ -40,7 +40,7 @@ services:
     container_name: mariadb
     volumes:
       - "./files:/files:ro"
-    command: bash -c "/database_user.sh"
+    command: bash -c "/files/database_user.sh"
   
   fastapi:
     build:
