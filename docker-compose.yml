@@ -59,6 +59,8 @@ services:
       - mariadb
     command: bash -c "sleep 10 && uvicorn app.main:app --host 0.0.0.0 --port 8000"
     restart: "on-failure:5"
+    volumes:
+      - "./variable.py:/code/app/variable.py:ro"
 
 networks:
   databasenetwork:
