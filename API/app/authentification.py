@@ -9,8 +9,9 @@ from jose import JWTError, jwt
 from app.db import get_db_Users
 import app.crud as crud
 import app.schema as schema
+import sys
 sys.path.append('../../files/')
-from files.variable import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
+from variable import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
