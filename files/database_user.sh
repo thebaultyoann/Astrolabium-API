@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Get the data from the Python file to access the variables
-source ~/files/variable.py
+source ~/../files/variable.py
 
 #MariaDBrootpassword
 echo "Mariadb_Root_Password:$Mariadb_Root_Password"
