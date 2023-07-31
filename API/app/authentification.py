@@ -5,7 +5,7 @@ from jose import jwt
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 from typing import Annotated
-from jose import JWTError, jwt
+from jose import JWTError, jwt  
 from app.db import get_db_Users
 import app.crud as crud
 import app.schema as schema
@@ -88,7 +88,14 @@ def manage_password_changement(current_user,password_form,db):
     return "Passwords do not match"
 
 def login_the_user_for_access_token(form_data,db):
-    user = authenticate_user(db, form_data.username, form_data.password)
+    try:
+        user = authenticate_user(db, form_data.username, form_data.password)
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
