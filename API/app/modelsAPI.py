@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, Date, JSON, String, Boolean
+from sqlalchemy import Column, Integer, Date, JSON
 from app.db import Base
 
 #Simulation

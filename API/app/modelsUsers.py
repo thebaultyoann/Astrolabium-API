@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, Date, JSON, String, Boolean
+from sqlalchemy import Column, Integer, String, Boolean
 from app.db import Base
 
 #Authentification

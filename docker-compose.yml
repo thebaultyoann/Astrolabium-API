@@ -38,6 +38,8 @@ services:
     ###### modify this password, remember it and delete it from this file afterwards ######
       - MYSQL_ROOT_PASSWORD=lol
     container_name: mariadb
+    volumes:
+      - "./files:/files:ro"
     command: bash -c "/database_user.sh"
   
   fastapi:
