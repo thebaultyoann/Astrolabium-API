@@ -39,6 +39,13 @@ async def getSimulation(
 ):
     return getsimulation.get_simulation_for_target_day(simulationDate=payload.simulationDate,targetedDay=payload.targetedDay,db=db)
 
+@app.post("/addSimulation", response_model=list[schema.DataDay])
+def addSimulation(
+    current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
+    payload: schema.DataDayTargetedDay,
+    db:Session = Depends(db.get_db_API)
+)
+
 #Endpoints for authentification
 @app.post("/login", response_model=schema.Token)
 async def login_for_access_token(

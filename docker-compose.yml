@@ -51,6 +51,7 @@ services:
       ####################################### insert your domain name here ################
       - 'traefik.http.routers.fastapi.rule=Host(`astrolabium.gotdns.ch`) && PathPrefix(`/`)'
       - 'traefik.http.routers.fastapi.entrypoints=websecure'
+      - 'traefik.http.routers.fastapi.entrypoints=web'
       - "traefik.http.routers.fastapi.tls.certresolver=myresolver"
       - 'traefik.http.routers.fastapi.tls=true'
       - 'traefik.http.services.fastapi.loadbalancer.server.port=8000'
