@@ -24,8 +24,6 @@ services:
     build:
       context: ./MariaDB/
       dockerfile: Dockerfile
-    networks:
-      - databasenetwork
     ports:
       - "3306:3306"
     environment:
@@ -39,8 +37,6 @@ services:
       dockerfile: Dockerfile
     volumes:
       - "./files:/files"
-    networks:
-      - databasenetwork
     labels:
       - 'traefik.enable=true'
       ####################################### insert your domain name here ################
@@ -54,7 +50,3 @@ services:
       - mariadb
     command: bash -c "sleep 10 && uvicorn app.main:app --host 0.0.0.0 --port 8000"
     restart: "on-failure:5"
-
-
-networks:
-  databasenetwork:
