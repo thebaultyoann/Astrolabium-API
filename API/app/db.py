@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import sys
-sys.path.append('../../')
+sys.path.append('../../files/')
 from variables import DB_Username_For_API, DB_Password_For_API, DB_Container_Name, DB_Name_For_API, DB_Name_For_Users
 
 engineAPI = create_engine("mariadb+mariadbconnector://"+DB_Username_For_API+":"+DB_Password_For_API+"@"+DB_Container_Name+":3306/"+DB_Name_For_API)
