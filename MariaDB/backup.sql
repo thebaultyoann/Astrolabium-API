@@ -310,7 +310,7 @@ LOCK TABLES `users2` WRITE;
 /*!40000 ALTER TABLE `users2` DISABLE KEYS */;
 INSERT INTO `users2` VALUES
 (1,'john','$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW',1),
-(2,'beta','$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW',0),
+(2,'beta','$3c$47$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW',0),
 (3,'yoan','$2b$12$/aCCH27qKUlmsJYB3eskfuRMtq3Ri60pKM0Q0GMnyp39CVi/GcEgS',0);
 /*!40000 ALTER TABLE `users2` ENABLE KEYS */;
 UNLOCK TABLES;
