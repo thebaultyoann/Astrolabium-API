@@ -1,4 +1,4 @@
 #!/bin/bash
 
 sudo docker-compose up -d 
-sudo bash /files/database_user.sh
+sudo bash files/database_user.sh
