@@ -39,7 +39,6 @@ async def getSimulation(
 ):
     return getsimulation.get_simulation_for_target_day(simulationDate=payload.simulationDate,targetedDay=payload.targetedDay,db=db)
 
-
 #Endpoints for authentification
 @app.post("/login", response_model=schema.Token)
 async def login_for_access_token(
@@ -62,3 +61,8 @@ async def read_user_password(
 ):
     return authentification.manage_password_changement(current_user=current_user,password_form=password_form,db=db)
 
+# here some modifications needs to me made, first have a new user able to modify the data inside the dataday and datahours
+# so we need routes to modify thoses with specific data specified
+# we do we let the user modify its own password? the route already exists but means the user used by these get rights on modification on the table 
+ 
+#adding a route following a isngle day 
