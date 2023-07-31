@@ -29,7 +29,7 @@ EOF
 
 sudo docker exec -i $DB_Container_Name mariadb -u root -p$Mariadb_Root_Password <<EOF
 CREATE USER '$DB_User_For_Admin'@'%' IDENTIFIED BY '$DB_Password_For_Admin';
-GRANT SELECT ON $DB_Name_For_API.* TO '$DB_User_For_Admin'@'%';
+GRANT SELECT, INSERT, UPDATE, DELETE ON $DB_Name_For_API.* TO '$DB_User_For_Admin'@'%';
 GRANT SELECT ON $DB_Name_For_Users.* TO '$DB_User_For_Admin'@'%';
 EOF
 
