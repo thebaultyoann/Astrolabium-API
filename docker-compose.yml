@@ -10,11 +10,11 @@ services:
       - "--api.insecure=true"
       - "--providers.docker=true"
       #- "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.websecure.address=:443" 
       #- "--certificatesresolvers.myresolver.acme.httpchallenge=true"
       #- "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
       - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
-      ################################################# insert your email here ################
+      ################################################ insert your email here ################
       - "--certificatesresolvers.myresolver.acme.email=thebaultyoann56@gmail.com"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     ports:
