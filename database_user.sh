@@ -13,14 +13,14 @@ EOF
 
 #For client api
 sudo docker exec -i $DB_Container_Name mariadb -u root -p$Mariadb_Root_Password <<EOF
-CREATE USER '$DB_Username_API'@'%' IDENTIFIED BDB_Username_APIY '$DB_Password_API';
+CREATE USER '$DB_Username_API'@'%' IDENTIFIED BY '$DB_Password_API';
 GRANT SELECT ON $DB_Name_For_Api_Tables.* TO '$DB_Username_API'@'%';
 EOF
 
 #For Admin user
 sudo docker exec -i $DB_Container_Name mariadb -u root -p$Mariadb_Root_Password <<EOF
 CREATE USER '$DB_Username_UserAdmin'@'%' IDENTIFIED BY '$DB_Password_UserAdmin';
-GRANT SELECT ON $DB_Name_For_Users_Tables.userAdmin TO '$DB_Username_UserAdmin'@'%';
+GRANT SELECT ON $DB_Name_For_Users_Tables.useradmin TO '$DB_Username_UserAdmin'@'%';
 EOF
 
 #For Admin api
