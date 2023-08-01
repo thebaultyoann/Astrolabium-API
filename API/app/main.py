@@ -7,10 +7,10 @@ import app.db as db
 import app.authentification as authentification
 import app.getsimulation as getsimulation
 
-db.Base.metadata.create_all(bind=db.engineAPI)
+db.Base.metadate.create_all(bind=db.engineAPI)
 db.Base.metadate.create_all(bind=db.engineAPIAdmin)
-db.Base.metadata.create_all(bind=db.engineUsers)
-db.Base.metadata.create_all(bind=db.engineUserAdmin)
+db.Base2.metadata.create_all(bind=db.engineUsers)
+db.Base3.metadata.create_all(bind=db.engineUserAdmin)
 
 app = FastAPI()
 

@@ -12,6 +12,8 @@ engineUsers = create_engine("mariadb+mariadbconnector://"+DB_Username_Users+":"+
 engineUserAdmin = create_engine("mariadb+mariadbconnector://"+DB_Username_UserAdmin+":"+DB_Password_UserAdmin+"@"+DB_Container_Name+":3306/"+DB_Name_For_Users_Tables)
 
 Base = declarative_base()
+Base2 = declarative_base()
+Base3 = declarative_base()
 
 class DataDay(Base):
     __tablename__ = 'dataday'
@@ -20,20 +22,18 @@ class DataDay(Base):
     sample = Column(Integer)
     targetDays = Column(JSON)
 
-class Users(Base):
+class Users(Base2):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String(4),  unique=True, index=True)
     password_hashed = Column(String(60))
     disabled = Column(Boolean, default=True)
 
-class UserAdmin(Base):
+class UserAdmin(Base3):
     __tablename__ = 'useradmin'
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String(4),  unique=True, index=True)
     password_hashed = Column(String(60))
-
-
 
 SessionLocalAPI = sessionmaker(autocommit=False, autoflush=False, bind=engineAPI)
 SessionLocalAPIAdmin = sessionmaker(autocommit=False, autoflush=False, bind=engineAPIAdmin)
