@@ -3,33 +3,28 @@
 #Get the data from the Python file to access the variables
 source files/variable.py
 
-#MariaDBrootpassword
-echo "Mariadb_Root_Password:$Mariadb_Root_Password"
-
-#User
-echo "DB_Username_For_API:$DB_Username_For_API"
-echo "DB_Password_For_API:$DB_Password_For_API"
-
-#Admin
-echo "DB_User_For_Admin: $DB_User_For_Admin"
-echo "DB_Password_For_Admin: $DB_Password_For_Admin"
-
-#databases
-echo "DB_Container_Name: $DB_Container_Name"
-echo "DB_Name_For_API: $DB_Name_For_API"
-echo "DB_Name_For_Users: $DB_Name_For_Users"
-
 #update users inside mariadb
 
+#For client users
 sudo docker exec -i $DB_Container_Name mariadb -u root -p$Mariadb_Root_Password <<EOF
-CREATE USER '$DB_Username_For_API'@'%' IDENTIFIED BY '$DB_Password_For_API';
-GRANT SELECT ON $DB_Name_For_API.* TO '$DB_Username_For_API'@'%';
-GRANT SELECT ON $DB_Name_For_Users.* TO '$DB_Username_For_API'@'%';
+CREATE USER '$DB_Username_Users'@'%' IDENTIFIED BY '$DB_Password_Users';
+GRANT SELECT ON $DB_Name_For_Users_Tables.users TO '$DB_Username_Users'@'%';
 EOF
 
+#For client api
 sudo docker exec -i $DB_Container_Name mariadb -u root -p$Mariadb_Root_Password <<EOF
-CREATE USER '$DB_User_For_Admin'@'%' IDENTIFIED BY '$DB_Password_For_Admin';
-GRANT SELECT, INSERT, UPDATE, DELETE ON $DB_Name_For_API.* TO '$DB_User_For_Admin'@'%';
-GRANT SELECT ON $DB_Name_For_Users.* TO '$DB_User_For_Admin'@'%';
+CREATE USER '$DB_Username_API'@'%' IDENTIFIED BDB_Username_APIY '$DB_Password_API';
+GRANT SELECT ON $DB_Name_For_Api_Tables.* TO '$DB_Username_API'@'%';
 EOF
 
+#For Admin user
+sudo docker exec -i $DB_Container_Name mariadb -u root -p$Mariadb_Root_Password <<EOF
+CREATE USER '$DB_Username_UserAdmin'@'%' IDENTIFIED BY '$DB_Password_UserAdmin';
+GRANT SELECT ON $DB_Name_For_Users_Tables.userAdmin TO '$DB_Username_UserAdmin'@'%';
+EOF
+
+#For Admin api
+sudo docker exec -i $DB_Container_Name mariadb -u root -p$Mariadb_Root_Password <<EOF
+CREATE USER '$DB_Username_APIAdmin'@'%' IDENTIFIED BY '$DB_Password_APIAdmin';
+GRANT SELECT, INSERT, UPDATE, DELETE ON $DB_Name_For_Api_Tables.* TO '$DB_Username_APIAdmin'@'%';
+EOF

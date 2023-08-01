@@ -16,7 +16,7 @@ app = FastAPI()
 
 #Endpoints for data
 @app.post("/getSimulation", response_model=list[schema.DataDay])
-def getSimulation(
+def get_Simulation(
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
     payload: schema.DataDayBase,
     db: Session = Depends(db.get_db_API)
@@ -24,7 +24,7 @@ def getSimulation(
     return getsimulation.get_simulation(simulationDate=payload.simulationDate, db=db)
 
 @app.post("/getSimulationSample", response_model=schema.DataDay)
-def getSimulationSample(
+def get_Simulation_Sample(
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
     payload : schema.DataDaySample,
     db:Session = Depends(db.get_db_API)
@@ -32,19 +32,20 @@ def getSimulationSample(
     return getsimulation.get_simulation_sample(simulationDate=payload.simulationDate,sample=payload.sample,db=db)
 
 @app.post("/getSimulationForTargetDay", response_model=list[schema.DataDayForTargetedDay])
-async def getSimulation(
+async def get_Simulation_For_Target_Day(
     current_user: Annotated[schema.User,Depends(authentification.get_current_active_user)],
     payload: schema.DataDayTargetedDay,
     db:Session = Depends(db.get_db_API)
 ):
     return getsimulation.get_simulation_for_target_day(simulationDate=payload.simulationDate,targetedDay=payload.targetedDay,db=db)
 
-#@app.post("/addSimulation", response_model=list[schema.DataDay])
-#def addSimulation(
-#    current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
-#    payload: schema.DataDayTargetedDay,
-#    db:Session = Depends(db.get_db_API)
-#)
+# @app.post("/addSimulation", response_model=list[schema.DataDay])
+# def addSimulation(
+#     current_admin_user: Annotated[schema.AdminUser, Depends(authentification.get_current_active_admin_user)],
+#     payload: schema.DataDayTargetedDayInput,
+#     db:Session = Depends(db.get_db_API)
+# ):
+#     return addsimulation.add_simulation()
 
 #Endpoints for authentification
 @app.post("/login", response_model=schema.Token)
@@ -53,6 +54,13 @@ async def login_for_access_token(
     db:Session = Depends(db.get_db_Users)
 ):
     return authentification.login_the_user_for_access_token(form_data=form_data,db=db)
+
+@app.post("/login_admin", response_model=schema.Token)
+async def login_for_admin_access_token(
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
+    db:Session = Depends(db.get_db_UserAdmin)
+):
+    return authentification.login_the_user_admin_for_access_token(form_data=form_data, db=db)
 
 @app.get("/user/me/", response_model=schema.User)
 async def read_user_me(

@@ -12,11 +12,19 @@ def get_sample_from_db(db: Session, simulationDate: datetime.date, sample: float
 
 def get_user(db: Session, username: str):
     user_dict = db.query(modelsUsers.Users).filter((modelsUsers.Users.username == username)).first()
-    return schema.UserPassword(
+    return schema.UserActivated(
         id=user_dict.id,
         username=user_dict.username,
         password_hashed=user_dict.password_hashed,
         disabled=user_dict.disabled
+    )
+
+def get_user_admin(db: Session, username: str):
+    user_dict = db.query(modelsUsers.UserAdmin).filter((modelsUsers.UserAdmin.username == username)).first()
+    return schema.UserPassword(
+        id=user_dict.id,
+        username=user_dict.username,
+        password_hashed=user_dict.password_hashed
     )
 
 def change_user_password(db: Session, username:str, new_password_hashed:str):

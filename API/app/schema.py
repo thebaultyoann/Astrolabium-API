@@ -42,11 +42,13 @@ class TokenData(BaseModel):
 
 class User(BaseModel):
     username: str
-    disabled: bool | None = None
 
 class UserPassword(User):
     password_hashed: str
 
+class UserActivated(UserPassword):
+    disabled: bool | None = None
+    
 class PasswordChangeForm(BaseModel):
     old_password_plain: Annotated[str, Form(..., description="Your old password")]
     new_password_plain: Annotated[str, Form(..., description="Your new password")]
