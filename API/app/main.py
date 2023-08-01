@@ -48,12 +48,12 @@ async def get_Simulation_For_Target_Day(
 #     return addsimulation.add_simulation()
 
 #Endpoints for authentification
-# @app.post("/login", response_model=schema.Token)
-# async def login_for_access_token(
-#     form_data: Annotated[OAuth2PasswordRequestForm, Depends()   ],
-#     db:Session = Depends(db.get_db_Users)
-# ):
-#     return authentification.login_the_user_for_access_token(form_data=form_data,db=db)
+@app.post("/login", response_model=schema.Token)
+async def login_for_access_token(
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()   ],
+    db:Session = Depends(db.get_db_Users)
+):
+    return authentification.login_the_user_for_access_token(form_data=form_data,db=db)
 
 @app.post("/login_admin", response_model=schema.Token)
 async def login_for_admin_access_token(
