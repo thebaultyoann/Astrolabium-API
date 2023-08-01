@@ -37,8 +37,8 @@ class UserAdmin(Base3):
 
 SessionLocalAPI = sessionmaker(autocommit=False, autoflush=False, bind=engineAPI)
 SessionLocalAPIAdmin = sessionmaker(autocommit=False, autoflush=False, bind=engineAPIAdmin)
-SessionLocalUsers = sessionmaker(autoflush=False, bind=engineUsers, class_=Users)
-SessionLocalUsersAdmin = sessionmaker(autoflush=False, bind=engineUserAdmin, class_=UserAdmin)
+SessionLocalUsers = sessionmaker(autoflush=False, class_=Users)
+SessionLocalUsersAdmin = sessionmaker(autoflush=False, class_=UserAdmin)
 
 
 #Dependency
