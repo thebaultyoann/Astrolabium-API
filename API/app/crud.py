@@ -1,17 +1,16 @@
 from sqlalchemy.orm import Session
 import datetime
-import app.modelsAPI as modelsAPI
-import app.modelsUsers as modelsUsers
+import app.db as database
 import app.schema as schema
 
 def get_simulation_from_db(db: Session, simulationDate: datetime.date):
-    return db.query(modelsAPI.DataDay).filter(modelsAPI.DataDay.simulationDate == simulationDate).all()
+    return db.query(database.DataDay).filter(database.DataDay.simulationDate == simulationDate).all()
 
 def get_sample_from_db(db: Session, simulationDate: datetime.date, sample: float):
-    return db.query(modelsAPI.DataDay).filter((modelsAPI.DataDay.simulationDate == simulationDate)&(modelsAPI.DataDay.sample == sample)).all()
+    return db.query(database.DataDay).filter((database.DataDay.simulationDate == simulationDate)&(database.DataDay.sample == sample)).all()
 
 def get_user(db: Session, username: str):
-    user_dict = db.query(modelsUsers.Users).filter((modelsUsers.Users.username == username)).first()
+    user_dict = db.query(database.Users).filter((database.Users.username == username)).first()
     return schema.UserActivated(
         id=user_dict.id,
         username=user_dict.username,
@@ -20,7 +19,7 @@ def get_user(db: Session, username: str):
     )
 
 def get_user_admin(db: Session, username: str):
-    user_dict = db.query(modelsUsers.UserAdmin).filter((modelsUsers.UserAdmin.username == username)).first()
+    user_dict = db.query(database.UserAdmin).filter((database.UserAdmin.username == username)).first()
     return schema.UserPassword(
         id=user_dict.id,
         username=user_dict.username,
@@ -28,7 +27,7 @@ def get_user_admin(db: Session, username: str):
     )
 
 def change_user_password(db: Session, username:str, new_password_hashed:str):
-    user = db.query(modelsUsers.Users).filter((modelsUsers.Users.username == username)).first()
+    user = db.query(database.Users).filter((database.Users.username == username)).first()
     user.password_hashed = new_password_hashed
     db.commit()
     db.refresh(user)

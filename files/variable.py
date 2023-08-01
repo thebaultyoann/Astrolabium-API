@@ -2,10 +2,6 @@
 DB_Username_Users="client"
 DB_Password_Users="password"
 
-#For Client Users
-DB_Username_Users="client"
-DB_Password_Users="password"
-
 #For Client API
 DB_Username_API="api_client"
 DB_Password_API="password"

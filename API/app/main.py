@@ -2,15 +2,15 @@ from fastapi import Depends, FastAPI, Body, Query
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from typing import Annotated
-import app.modelsAPI as modelsAPI
-import app.modelsUsers as modelsUsers
 import app.schema as schema
 import app.db as db
 import app.authentification as authentification
 import app.getsimulation as getsimulation
 
-modelsAPI.Base.metadata.create_all(bind=db.engineAPI)
-modelsUsers.Base.metadata.create_all(bind=db.engineUsers)
+db.Base.metadata.create_all(bind=db.engineAPI)
+db.Base.metadate.create_all(bind=db.engineAPIAdmin)
+db.Base.metadata.create_all(bind=db.engineUsers)
+db.Base.metadata.create_all(bind=db.engineUserAdmin)
 
 app = FastAPI()
 
