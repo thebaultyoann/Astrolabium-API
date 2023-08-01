@@ -10,7 +10,7 @@ engineAPIAdmin= create_engine("mariadb+mariadbconnector://"+DB_Username_APIAdmin
 engineUsers = create_engine("mariadb+mariadbconnector://"+DB_Username_Users+":"+DB_Password_Users+"@"+DB_Container_Name+":3306/"+DB_Name_For_Users_Tables)
 engineUserAdmin = create_engine("mariadb+mariadbconnector://"+DB_Username_UserAdmin+":"+DB_Password_UserAdmin+"@"+DB_Container_Name+":3306/"+DB_Name_For_Users_Tables)
 SessionLocalAPI = sessionmaker(autocommit=False, autoflush=False, bind=engineAPI)
-SessionLocalAPIAdmin = sessionmaker(autocommit=False, autoflush=False, bind=engineAPI)
+SessionLocalAPIAdmin = sessionmaker(autocommit=False, autoflush=False, bind=engineAPIAdmin)
 SessionLocalUsers = sessionmaker(autocommit=False, autoflush=False, bind=engineUsers)
 SessionLocalUsersAdmin = sessionmaker(autocommit=False, autoflush=False, bind=engineUserAdmin)
 Base = declarative_base()
@@ -31,14 +31,14 @@ def get_db_APIAdmin():
         db.close()                    
         
 def get_db_Users():
-    db = SessionLocalAPI()
+    db = SessionLocalUsers()
     try:    
         yield db
     finally:
         db.close()      
 
 def get_db_UserAdmin():
-    db = SessionLocalAPI()
+    db = SessionLocalUsersAdmin()
     try:    
         yield db
     finally:
