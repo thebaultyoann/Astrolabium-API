@@ -6,6 +6,7 @@ import app.schema as schema
 import app.db as db
 import app.authentification as authentification
 import app.getsimulation as getsimulation
+import crud
 
 db.Base.metadata.create_all(bind=db.engineAPI)
 db.Base.metadata.create_all(bind=db.engineAPIAdmin)
