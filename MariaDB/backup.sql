@@ -56,7 +56,7 @@ DROP TABLE IF EXISTS `useradmin`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `useradmin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(4) DEFAULT NULL,
+  `username` varchar(5) DEFAULT NULL,
   `password_hashed` varchar(60) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ix_useradmin_username` (`username`),
@@ -67,7 +67,7 @@ CREATE TABLE `useradmin` (
 LOCK TABLES `useradmin` WRITE;
 /*!40000 ALTER TABLE `useradmin` DISABLE KEYS */;
 INSERT INTO `useradmin` VALUES
-(1,'john','$2b$12$SHXJGzM4i.1fnWxRV2CmNuPRvJVktMVScppmHs0F5wQzUGJ8aVKM.');
+(1,'tomas','$2b$12$SHXJGzM4i.1fnWxRV2CmNuPRvJVktMVScppmHs0F5wQzUGJ8aVKM.');
           
 
 /*!40000 ALTER TABLE `useradmin` ENABLE KEYS */;
@@ -78,7 +78,7 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(4) DEFAULT NULL,
+  `username` varchar(8) DEFAULT NULL,
   `password_hashed` varchar(60) DEFAULT NULL,
   `disabled` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -93,9 +93,9 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` VALUES
-(1,'john','$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW',1),
-(2,'beta','$3c$47$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW',0),
-(3,'yoan','$2b$12$/aCCH27qKUlmsJYB3eskfuRMtq3Ri60pKM0Q0GMnyp39CVi/GcEgS',0);
+(1,'username','$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW',0),
+(2,'itsatest','$3c$47$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW',1),
+(3,'yoannthe','$2b$12$/aCCH27qKUlmsJYB3eskfuRMtq3Ri60pKM0Q0GMnyp39CVi/GcEgS',0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
