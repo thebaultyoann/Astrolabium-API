@@ -57,7 +57,7 @@ DROP TABLE IF EXISTS `useradmin`;
 CREATE TABLE `useradmin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(4) DEFAULT NULL,
-  `hashed_password` varchar(60) DEFAULT NULL,
+  `password_hashed` varchar(60) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ix_useradmin_username` (`username`),
   KEY `ix_useradmin_id` (`id`)
@@ -67,24 +67,14 @@ CREATE TABLE `useradmin` (
 LOCK TABLES `useradmin` WRITE;
 /*!40000 ALTER TABLE `useradmin` DISABLE KEYS */;
 INSERT INTO `useradmin` VALUES
-(1,'john','$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW');
+(1,'john','$2b$12$SHXJGzM4i.1fnWxRV2CmNuPRvJVktMVScppmHs0F5wQzUGJ8aVKM.');
+          
+
 /*!40000 ALTER TABLE `useradmin` ENABLE KEYS */;
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(4) DEFAULT NULL,
-  `password_hashed` varchar(60) DEFAULT NULL,
-  `disabled` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `ix_users_username` (`username`),
-  KEY `ix_users_id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
---
+/*!40101 SETx
 -- Dumping data for table `users`
 --
 
