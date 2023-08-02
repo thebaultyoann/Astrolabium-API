@@ -74,7 +74,19 @@ INSERT INTO `useradmin` VALUES
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `users`;
-/*!40101 SETx
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(4) DEFAULT NULL,
+  `password_hashed` varchar(60) DEFAULT NULL,
+  `disabled` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ix_users_username` (`username`),
+  KEY `ix_users_id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+--
 -- Dumping data for table `users`
 --
 
