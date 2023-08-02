@@ -39,7 +39,7 @@ def get_Simulation_Sample(
 ):
     return simulation.get_simulation_thousand_sample(simulationDate=payload.simulationDate,sampleStart=payload.sampleStart,db=db)
 
-@app.post("/simulationHundredSample", response_model=list[schema.DataDay])
+@app.post("/simulationHundredSample")
 def get_Simulation_Sample(
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
     payload : schema.DataDayHundredSample,
