@@ -17,11 +17,14 @@ class DataDayBase(BaseModel):
 class DataDaySample(DataDayBase):
     sample : int = Field(..., ge=sampleMin, le=sampleMax, description="From 1 to 100000", example=1)
 
+class DataDayTenThousandSample(DataDayBase):
+    sampleStart : int = Field(..., ge=sampleMin, le=sampleMax-10000, description="From 1 to 90000, give the 10000 following samples", example=1)
+
 class DataDayThousandSample(DataDayBase):
-    sampleStart : int = Field(..., ge=sampleMin, le=sampleMax-1000, description="From 1 to 9000, give the 1000 following samples", example=1)
+    sampleStart : int = Field(..., ge=sampleMin, le=sampleMax-1000, description="From 1 to 99000, give the 1000 following samples", example=1)
 
 class DataDayHundredSample(DataDayBase):
-    sampleStart : int = Field(..., ge=sampleMin, le=sampleMax-100, description="From 1 to 9900, give the 100 following samples", example=1)
+    sampleStart : int = Field(..., ge=sampleMin, le=sampleMax-100, description="From 1 to 99900, give the 100 following samples", example=1)
 
 
 class DataDayTargetedDay(DataDayBase):
