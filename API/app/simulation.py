@@ -6,22 +6,16 @@ def get_simulation(simulationDate, db):
     return data
 
 def get_simulation_sample(simulationDate,sample,db):
-    data = crud.get_sample_from_db(db=db, simulationDate=simulationDate, sample=sample)
-    return data[0]
+    return crud.get_sample_from_db(db=db, simulationDate=simulationDate, sample=sample)
 
 def get_simulation_thousand_sample(simulationDate,sampleStart,db):
     returned_data=[]
-    for sample in range(sampleStart, sampleStart+1000):
-        data = crud.get_sample_from_db(db=db, simulationDate=simulationDate, sample=sample)
-        returned_data.append(data[0])
+    for sample in range(sampleStart, sampleStart+100):
+        returned_data.append(crud.get_sample_from_db(db=db, simulationDate=simulationDate, sample=sample))
     return returned_data
 
 def get_simulation_hundred_sample(simulationDate,sampleStart,db):
-    returned_data=[]
-    for sample in range(sampleStart, sampleStart+100):
-        data = crud.get_sample_from_db(db=db, simulationDate=simulationDate, sample=sample)
-        returned_data.append(data[0])
-    return returned_data
+    return crud.get_hundred_sample_from_db(simulationDate=simulationDate, sample=sampleStart, db=db)
 
 def test_db(simulationDate, sample, db):
     return crud.sample_test_db(simulationDate=simulationDate, sample=sample, db=db)
