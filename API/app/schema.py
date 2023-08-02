@@ -5,7 +5,7 @@ from datetime import date
 
 #range of queries
 sampleMin=1
-sampleMax=3 
+sampleMax=100000
 
 targetDayMin=1
 targetDayMax=180
