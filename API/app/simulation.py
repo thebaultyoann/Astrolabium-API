@@ -34,3 +34,12 @@ def add_simulation(dict, db):
         if not crud.add_simulation_on_db(db=db, simulationDate=simulationDate, sample=sample, targetDays=targetDays):
             return False
     return True
+
+
+def add_simulation_one_by_one(dict, db):
+    simulationDate = dict.simulationDate
+    sample = dict.sample
+    targetDays = dict.targetDays
+    if not crud.add_simulation_on_db(db=db, simulationDate=simulationDate, sample=sample, targetDays=targetDays):
+        return False
+    return True

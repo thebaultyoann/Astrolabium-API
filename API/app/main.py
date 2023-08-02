@@ -42,10 +42,18 @@ async def get_Simulation_For_Target_Day(
 @app.post("/addSimulation", response_model=schema.validationOnUpload)
 def addSimulation(
     #current_admin_user: Annotated[schema.User, Depends(authentification.get_current_admin_user)],
-    payload: schema.DataDayInput,
+    payload: list[schema.DataDayInput],
     db:Session = Depends(db.get_db_API)
 ):
     return simulation.add_simulation(dict=payload, db=db)
+
+@app.post("/addSimulationOneByOne", response_model=schema.validationOnUpload)
+def addSimulation(
+    #current_admin_user: Annotated[schema.User, Depends(authentification.get_current_admin_user)],
+    payload: schema.DataDayInput,
+    db:Session = Depends(db.get_db_API)
+):
+    return simulation.add_simulation_one_by_one(dict=payload, db=db)
 
 #Endpoints for authentification
 @app.post("/login", response_model=schema.Token)
