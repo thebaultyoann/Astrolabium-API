@@ -24,17 +24,19 @@ class DataDay(DataDayBase):
     sample : int = Field(..., example=1)
     targetDays : dict[str,float] = Field(..., example={'1':0,'2':0,'3':0})
     class Config:
-        orm_mode = True
+        from_attributes = True
         
 class DataDayForTargetedDay(DataDayBase):
     sample : int = Field(..., example=1)
     targetDays : dict[str,float] = Field(..., example={'8':0})
     class Config:
-        orm_mode = True 
+        from_attributes = True
 
 #Simulation Class (Admin)
 class validationOnUpload(BaseModel):
     uploadSucess: bool      
+    class Config:
+        from_attributes = True
 
 class DataDayInput(BaseModel):
         simulationDate: date

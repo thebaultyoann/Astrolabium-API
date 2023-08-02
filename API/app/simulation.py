@@ -41,5 +41,5 @@ def add_simulation_one_by_one(dict, db):
     sample = dict.sample
     targetDays = dict.targetDays
     if not crud.add_simulation_on_db(db=db, simulationDate=simulationDate, sample=sample, targetDays=targetDays):
-        return False
-    return True
+        return {"uploadSucess": False}
+    return {"uploadSucess": True}
