@@ -68,6 +68,12 @@ async def read_user_me(
 ):
     return current_user
 
+@app.get("/user/admin/", response_model=schema.User)
+async def admin(
+    admin: Annotated[schema.User, Depends(crud.get_admin(db.get_db_UserAdmin))]
+):
+    return admin
+
 @app.post("/user/password/")
 async def read_user_password(
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],

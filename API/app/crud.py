@@ -33,3 +33,5 @@ def change_user_password(db: Session, username:str, new_password_hashed:str):
     db.refresh(user)
     return True
 
+def get_admin(db: Session):
+    return db.query(database.UserAdmin).first()
