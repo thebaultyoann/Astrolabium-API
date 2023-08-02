@@ -5,7 +5,6 @@ def get_simulation(simulationDate, db):
     data = crud.get_simulation_from_db(db=db, simulationDate=simulationDate)
     return data
 
-
 def get_simulation_sample(simulationDate,sample,db):
     data = crud.get_sample_from_db(db=db, simulationDate=simulationDate, sample=sample)
     return data[0]
@@ -32,9 +31,8 @@ def add_simulation(dict, db):
         sample = dict[k].sample
         targetDays = dict[k].targetDays
         if not crud.add_simulation_on_db(db=db, simulationDate=simulationDate, sample=sample, targetDays=targetDays):
-            return False
-    return True
-
+            return {"uploadSucess": False}
+    return {"uploadSucess": True}
 
 def add_simulation_one_by_one(dict, db):
     simulationDate = dict.simulationDate
