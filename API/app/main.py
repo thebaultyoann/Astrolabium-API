@@ -43,7 +43,7 @@ async def get_Simulation_For_Target_Day(
 def addSimulation(
     #current_admin_user: Annotated[schema.User, Depends(authentification.get_current_admin_user)],
     payload: list[schema.DataDayInput],
-    db:Session = Depends(db.get_db_API)
+    db:Session = Depends(db.get_db_APIAdmin)
 ):
     return simulation.add_simulation(dict=payload, db=db)
 
@@ -51,7 +51,7 @@ def addSimulation(
 def addSimulation(
     #current_admin_user: Annotated[schema.User, Depends(authentification.get_current_admin_user)],
     payload: schema.DataDayInput,
-    db:Session = Depends(db.get_db_API)
+    db:Session = Depends(db.get_db_APIAdmin)
 ):
     return simulation.add_simulation_one_by_one(dict=payload, db=db)
 
