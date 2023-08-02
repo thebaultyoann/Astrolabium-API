@@ -13,7 +13,6 @@ def add_simulation_on_db(db:Session, simulationDate: datetime.date, sample: floa
     new_simulation = database.DataDay(simulationDate=simulationDate, sample=sample, targetDays=targetDays)
     db.add(new_simulation)
     db.commit()
-    db.refresh()
     return True
 
 
