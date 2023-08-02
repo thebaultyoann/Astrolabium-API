@@ -23,6 +23,9 @@ def get_simulation_hundred_sample(simulationDate,sampleStart,db):
         returned_data.append(data[0])
     return returned_data
 
+def test_db(simulationDate, sample, db):
+    return crud.sample_test_db(simulationDate=simulationDate, sample=sample, db=db)
+
 def get_simulation_for_target_day(simulationDate,targetedDay,db):
     data = crud.get_simulation_from_db(db=db, simulationDate=simulationDate)
     output = []

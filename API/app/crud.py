@@ -9,6 +9,9 @@ def get_simulation_from_db(db: Session, simulationDate: datetime.date):
 def get_sample_from_db(db: Session, simulationDate: datetime.date, sample: float):
     return db.query(database.DataDay).filter((database.DataDay.simulationDate == simulationDate)&(database.DataDay.sample == sample)).all()
 
+def sample_test_db(db: Session, simulationDate: datetime.date, sample: float):
+    return db.query(database.DataDay).filter((database.DataDay.simulationDate == simulationDate)&(database.DataDay.sample == sample)).first()
+
 def add_simulation_on_db(db:Session, simulationDate: datetime.date, sample: float, targetDays: dict):
     new_simulation = database.DataDay(simulationDate=simulationDate, sample=sample, targetDays=targetDays)
     db.add(new_simulation)

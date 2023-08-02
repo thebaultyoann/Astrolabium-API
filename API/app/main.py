@@ -47,6 +47,15 @@ def get_Simulation_Sample(
 ):
     return simulation.get_simulation_hundred_sample(simulationDate=payload.simulationDate,sampleStart=payload.sampleStart,db=db)
 
+@app.post("/sampleTest")
+def get_Simulation_Sample(
+    current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
+    payload : schema.DataDaySample,
+    db:Session = Depends(db.get_db_API)
+):
+    return simulation.test_db(simulationDate=payload.simulationDate,sample=payload.sample,db=db)
+
+
 @app.post("/simulationForTargetDay", response_model=list[schema.DataDayForTargetedDay])
 async def get_Simulation_For_Target_Day(
     current_user: Annotated[schema.User,Depends(authentification.get_current_active_user)],
