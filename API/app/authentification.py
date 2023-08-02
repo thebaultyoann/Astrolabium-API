@@ -155,3 +155,6 @@ def login_the_user_admin_for_access_token(form_data,db):
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
+def get_admin(db:Session =Depends(get_db_UserAdmin)):
+    user = crud.get_admin(db=db)
+    return user

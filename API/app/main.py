@@ -6,7 +6,6 @@ import app.schema as schema
 import app.db as db
 import app.authentification as authentification
 import app.getsimulation as getsimulation
-import crud
 
 db.Base.metadata.create_all(bind=db.engineAPI)
 db.Base.metadata.create_all(bind=db.engineAPIAdmin)
@@ -71,7 +70,7 @@ async def read_user_me(
 
 @app.get("/user/admin/", response_model=schema.User)
 async def admin(
-    admin: Annotated[schema.User, Depends(crud.get_admin(db.get_db_UserAdmin))]
+    admin: Annotated[schema.User, Depends(authentification.get_admin)]
 ):
     return admin
 
