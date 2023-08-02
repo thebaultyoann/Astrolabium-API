@@ -10,7 +10,7 @@ def get_sample_from_db(db: Session, simulationDate: datetime.date, sample: float
     return db.query(database.DataDay).filter((database.DataDay.simulationDate == simulationDate)&(database.DataDay.sample == sample)).first()
 
 def get_hundred_sample_from_db(db: Session, simulationDate: datetime.date, sample: float):
-    return db.query(database.DataDay).filter((database.DataDay.simulationDate == simulationDate) & (database.DataDay.sample.between(sample, sample + 100))).first()
+    return db.query(database.DataDay).filter((database.DataDay.simulationDate == simulationDate) & (database.DataDay.sample.between(sample, sample + 100))).all()
 
 def add_simulation_on_db(db:Session, simulationDate: datetime.date, sample: float, targetDays: dict):
     new_simulation = database.DataDay(simulationDate=simulationDate, sample=sample, targetDays=targetDays)
