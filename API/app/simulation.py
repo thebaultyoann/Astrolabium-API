@@ -10,7 +10,7 @@ def get_simulation_sample(simulationDate,sample,db):
 
 def get_simulation_thousand_sample(simulationDate,sampleStart,db):
     returned_data=[]
-    for sample in range(sampleStart, sampleStart+1000):
+    for sample in range(sampleStart, sampleStart+100):
         returned_data.append(crud.get_sample_from_db(db=db, simulationDate=simulationDate, sample=sample))
     return returned_data
 
