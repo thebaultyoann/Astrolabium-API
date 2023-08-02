@@ -10,7 +10,7 @@ sampleMax=3
 targetDayMin=1
 targetDayMax=180
 
-#Simulation Class
+#Simulation Class (client)
 class DataDayBase(BaseModel):
     simulationDate: date
 
@@ -30,7 +30,17 @@ class DataDayForTargetedDay(DataDayBase):
     sample : int = Field(..., example=1)
     targetDays : dict[str,float] = Field(..., example={'8':0})
     class Config:
-        orm_mode = True          
+        orm_mode = True 
+
+#Simulation Class (Admin)
+class validationOnUpload(BaseModel):
+    uploadSucess: bool      
+
+class DataDayInput(BaseModel):
+        simulationDate: date
+        sample: int
+        targetDays : dict[str,float]
+
 
 #Authentifiation Class
 class Token(BaseModel):

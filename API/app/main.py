@@ -5,7 +5,7 @@ from typing import Annotated
 import app.schema as schema
 import app.db as db
 import app.authentification as authentification
-import app.getsimulation as getsimulation
+import app.simulation as simulation
 
 db.Base.metadata.create_all(bind=db.engineAPI)
 db.Base.metadata.create_all(bind=db.engineAPIAdmin)
@@ -15,37 +15,37 @@ db.Base3.metadata.create_all(bind=db.engineUserAdmin)
 app = FastAPI()
 
 #Endpoints for data
-@app.post("/getSimulation", response_model=list[schema.DataDay])
+@app.post("/simulation", response_model=list[schema.DataDay])
 def get_Simulation(
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
     payload: schema.DataDayBase,
     db: Session = Depends(db.get_db_API)
 ):
-    return getsimulation.get_simulation(simulationDate=payload.simulationDate, db=db)
+    return simulation.get_simulation(simulationDate=payload.simulationDate, db=db)
 
-@app.post("/getSimulationSample", response_model=schema.DataDay)
+@app.post("/simulationSample", response_model=schema.DataDay)
 def get_Simulation_Sample(
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
     payload : schema.DataDaySample,
     db:Session = Depends(db.get_db_API)
 ):
-    return getsimulation.get_simulation_sample(simulationDate=payload.simulationDate,sample=payload.sample,db=db)
+    return simulation.get_simulation_sample(simulationDate=payload.simulationDate,sample=payload.sample,db=db)
 
-@app.post("/getSimulationForTargetDay", response_model=list[schema.DataDayForTargetedDay])
+@app.post("/simulationForTargetDay", response_model=list[schema.DataDayForTargetedDay])
 async def get_Simulation_For_Target_Day(
     current_user: Annotated[schema.User,Depends(authentification.get_current_active_user)],
     payload: schema.DataDayTargetedDay,
     db:Session = Depends(db.get_db_API)
 ):
-    return getsimulation.get_simulation_for_target_day(simulationDate=payload.simulationDate,targetedDay=payload.targetedDay,db=db)
+    return simulation.get_simulation_for_target_day(simulationDate=payload.simulationDate,targetedDay=payload.targetedDay,db=db)
 
-# @app.post("/addSimulation", response_model=list[schema.DataDay])
-# def addSimulation(
-#     current_admin_user: Annotated[schema.AdminUser, Depends(authentification.get_current_active_admin_user)],
-#     payload: schema.DataDayTargetedDayInput,
-#     db:Session = Depends(db.get_db_API)
-# ):
-#     return addsimulation.add_simulation()
+@app.post("/addSimulation", response_model=schema.validationOnUpload)
+def addSimulation(
+    current_admin_user: Annotated[schema.AdminUser, Depends(authentification.get_current_active_admin_user)],
+    payload: schema.DataDayInput,
+    db:Session = Depends(db.get_db_API)
+):
+    return simulation.add_simulation(dict=payload, db=db)
 
 #Endpoints for authentification
 @app.post("/login", response_model=schema.Token)

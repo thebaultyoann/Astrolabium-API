@@ -25,3 +25,12 @@ def get_simulation_for_target_day(simulationDate,targetedDay,db):
                 }
         })
     return output
+
+def add_simulation(dict, db):
+    for k in range(len(dict)):
+        simulationDate = dict[k].simulationDate
+        sample = dict[k].sample
+        targetDays = dict[k].targetDays
+        if not crud.add_simulation_on_db(db=db, simulationDate=simulationDate, sample=sample, targetDays=targetDays):
+            return False
+    return True
