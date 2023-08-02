@@ -33,7 +33,7 @@ def get_Simulation_Sample(
 
 @app.post("/simulationForTargetDay", response_model=list[schema.DataDayForTargetedDay])
 async def get_Simulation_For_Target_Day(
-    current_user: Annotated[schema.User,Depends(authentification.get_current_active_user)],
+    #current_user: Annotated[schema.User,Depends(authentification.get_current_active_user)],
     payload: schema.DataDayTargetedDay,
     db:Session = Depends(db.get_db_API)
 ):
@@ -41,7 +41,7 @@ async def get_Simulation_For_Target_Day(
 
 @app.post("/addSimulation", response_model=schema.validationOnUpload)
 def addSimulation(
-    current_admin_user: Annotated[schema.AdminUser, Depends(authentification.get_current_active_admin_user)],
+    current_admin_user: Annotated[schema.User, Depends(authentification.get_current_active_admin_user)],
     payload: schema.DataDayInput,
     db:Session = Depends(db.get_db_API)
 ):
