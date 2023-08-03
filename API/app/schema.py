@@ -74,7 +74,7 @@ class UserTwoFA(UserPassword):
 class UserActivated(UserPassword):
     disabled: bool | None = None
 
-class UserTwoFaForm(BaseModel):
+class TwoFaForm(BaseModel):
     two_fa_code: str = Form(..., regex=r"^\d{6}$")
 
 class PasswordChangeForm(BaseModel):

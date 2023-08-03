@@ -30,7 +30,7 @@ def get_user(db: Session, username: str):
 
 def get_user_admin(db: Session, username: str):
     user_dict = db.query(database.UserAdmin).filter((database.UserAdmin.username == username)).first()
-    return schema.UserTwoFaForm(
+    return schema.UserTwoFA(
         id=user_dict.id,
         username=user_dict.username,
         password_hashed=user_dict.password_hashed,
