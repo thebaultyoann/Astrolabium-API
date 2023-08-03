@@ -69,12 +69,8 @@ class UserPassword(User):
 
 class UserActivated(UserPassword):
     disabled: bool | None = None
-    
-class AuthentificationForm(BaseModel):
-    username: str = Form(...)
-    password: str = Form(...)
-    
-class AuthentificationAdminForm(BaseModel):
+
+class TwoFaForm(BaseModel):
     username: str = Form(...)
     password: str = Form(...)
     two_fa_code: str = Form(..., regex=r"^\d{6}$")

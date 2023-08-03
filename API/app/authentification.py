@@ -31,7 +31,6 @@ def verify_twofa(twofa_code, key):
         return True
     return False
 
-
 def authenticate_user(db: Session, username: str, password: str):
     user = crud.get_user(db, username)
     if not user:
