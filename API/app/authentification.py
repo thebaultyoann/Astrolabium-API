@@ -71,16 +71,6 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
-def change_password(old_plain_password:str, new_password_hashed:str, username:str, db:Session):
-    user = crud.get_user(db,username)
-    if not user:
-        return False
-    if not verify_password(old_plain_password,user.password_hashed):
-        return False
-    if crud.change_user_password(db, username, new_password_hashed):
-        return True
-    return False
-
 #Authentification functions 
 async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db:Session = Depends(get_db_Users)):
     credentials_exception = HTTPException(
@@ -126,14 +116,6 @@ async def get_current_admin_user(token: Annotated[str, Depends(oauth2_scheme)], 
     if user is None:
         raise credentials_exception
     return user
-
-def manage_password_changement(current_user,password_form,db):
-    if password_form.new_password_plain == password_form.new_password_confirmation_plain:
-        new_password_hash = get_password_hash(password_form.new_password_plain)
-        if change_password(old_plain_password=password_form.old_password_plain, db=db, username=current_user.username, new_password_hashed=new_password_hash):
-            return "Your password has been successfully changed"
-        return "Incorrect old password"
-    return "Passwords do not match"
 
 def login_the_user_for_access_token(form_data,db):
     try:

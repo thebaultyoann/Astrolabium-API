@@ -102,19 +102,6 @@ async def read_user_me(
 ):
     return current_user
 
-@app.get("/user/admin/", response_model=schema.User)
-async def admin(
-    admin: Annotated[schema.User, Depends(authentification.get_admin)]
-):
-    return admin
-
-@app.post("/user/password/")
-async def read_user_password(
-    current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
-    password_form: schema.PasswordChangeForm = Depends(),
-    db:Session=Depends(db.get_db_Users)
-):
-    return authentification.manage_password_changement(current_user=current_user,password_form=password_form,db=db)
 
 # here some modifications needs to me made, first have a new user able to modify the data inside the dataday and datahours
 # so we need routes to modify thoses with specific data specified

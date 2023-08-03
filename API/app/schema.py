@@ -11,7 +11,7 @@ sampleMax=100000
 targetDayMin=1
 targetDayMax=180
 
-#Simulation Class (client)
+#Simulation
 class DataDayBase(BaseModel):
     simulationDate: date
 
@@ -75,14 +75,7 @@ class UserActivated(UserPassword):
     disabled: bool | None = None
 
 class TwoFaForm(BaseModel):
-    twofa_code: str = Form(..., regex=r"^\d{6}$")
-
-class PasswordChangeForm(BaseModel):
-    old_password_plain: Annotated[str, Form(..., description="Your old password")]
-    new_password_plain: Annotated[str, Form(..., description="Your new password")]
-    new_password_confirmation_plain: Annotated[str, Form(..., description="Confirm your new password")]
-
-
+    twofa_code: str = Form(..., regex=r"^\d{6}$")   
 
 
 
