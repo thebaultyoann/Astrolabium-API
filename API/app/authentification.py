@@ -10,6 +10,8 @@ from app.db import get_db_Users, get_db_UserAdmin
 import app.crud as crud
 import app.schema as schema
 import sys
+import pyotp
+
 sys.path.append('../../files/')
 from variable import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES, ACCESS_TOKEN_ADMIN_EXPIRE_MINUTES
 
