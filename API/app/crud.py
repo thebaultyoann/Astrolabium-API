@@ -33,7 +33,8 @@ def get_user_admin(db: Session, username: str):
     return schema.UserPassword(
         id=user_dict.id,
         username=user_dict.username,
-        password_hashed=user_dict.password_hashed
+        password_hashed=user_dict.password_hashed,
+        twofa_key=user_dict.twofa_key
     )
 
 def change_user_password(db: Session, username:str, new_password_hashed:str):
