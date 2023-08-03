@@ -2,6 +2,7 @@ from pydantic import BaseModel, Json, Field
 from fastapi import Form
 from typing import Annotated
 from datetime import date 
+from fastapi.security import OAuth2PasswordRequestForm
 
 #range of queries
 sampleMin=1
@@ -70,8 +71,9 @@ class UserPassword(User):
 class UserActivated(UserPassword):
     disabled: bool | None = None
 
-class TwoFaForm(BaseModel):
-    two_fa_code: str = Form(..., regex=r"^\d{6}$")
+class OAuth2PasswordWith2FARequestForm(OAuth2PasswordRequestForm):
+    two_fa_code: str = Form(..., min_length=6, max_length=6)
+
 
 class PasswordChangeForm(BaseModel):
     old_password_plain: Annotated[str, Form(..., description="Your old password")]
