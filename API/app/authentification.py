@@ -23,6 +23,13 @@ def verify_password(plain_password, hashed_password):
 def get_password_hash(password):
     return pwd_context.hash(password)
 
+def verify_twofa(twofa_code, key):
+    totp = pyotp.TOTP(key)
+    if totp.now()==twofa_code:
+        return True
+    return False
+
+
 def authenticate_user(db: Session, username: str, password: str):
     user = crud.get_user(db, username)
     if not user:
@@ -31,11 +38,13 @@ def authenticate_user(db: Session, username: str, password: str):
         return False
     return user
 
-def authenticate_user_admin(db: Session, username: str, password: str):
+def authenticate_user_admin(db: Session, username: str, password: str, twofa_code :str):
     user = crud.get_user_admin(db, username)
     if not user:
         return False
     if not verify_password(password, user.password_hashed):
+        return False
+    if not verify_twofa(twofa_code=twofa_code, key=user.twofa_key):
         return False
     return user
 
@@ -136,7 +145,7 @@ def login_the_user_for_access_token(form_data,db):
 
 def login_the_user_admin_for_access_token(form_data,db):
     try:
-        user = authenticate_user_admin(db, form_data.username, form_data.password)
+        user = authenticate_user_admin(db=db, username=form_data.username, password=form_data.password, twofa_code=form_data.twofa_code)
     except:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

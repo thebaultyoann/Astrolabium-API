@@ -83,14 +83,14 @@ def addSimulation(
 #Endpoints for authentification
 @app.post("/login", response_model=schema.Token)
 async def login_for_access_token(
-    form_data: Annotated[OAuth2PasswordRequestForm, Depends()   ],
+    form_data: Annotated[schema.AuthentificationForm, Depends()],
     db:Session = Depends(db.get_db_Users)
 ):
     return authentification.login_the_user_for_access_token(form_data=form_data,db=db)
 
 @app.post("/login_admin", response_model=schema.Token)
 async def login_for_admin_access_token(
-    form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
+    form_data: Annotated[schema.AuthentificationAdminForm, Depends()],
     db:Session = Depends(db.get_db_UserAdmin)
 ):
     return authentification.login_the_user_admin_for_access_token(form_data=form_data, db=db)

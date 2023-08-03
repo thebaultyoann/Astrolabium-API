@@ -53,7 +53,6 @@ class DataDayInput(BaseModel):
         sample: int
         targetDays : dict[str,float]
 
-
 #Authentifiation Class
 class Token(BaseModel):
     access_token: str
@@ -71,6 +70,15 @@ class UserPassword(User):
 class UserActivated(UserPassword):
     disabled: bool | None = None
     
+class AuthentificationForm(BaseModel):
+    username: str = Form(...)
+    password: str = Form(...)
+    
+class AuthentificationAdminForm(BaseModel):
+    username: str = Form(...)
+    password: str = Form(...)
+    two_fa_code: str = Form(..., regex=r"^\d{6}$")
+
 class PasswordChangeForm(BaseModel):
     old_password_plain: Annotated[str, Form(..., description="Your old password")]
     new_password_plain: Annotated[str, Form(..., description="Your new password")]

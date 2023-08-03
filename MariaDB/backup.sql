@@ -58,16 +58,19 @@ CREATE TABLE `useradmin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(5) DEFAULT NULL,
   `password_hashed` varchar(60) DEFAULT NULL,
+  `twofa_key` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ix_useradmin_username` (`username`),
   KEY `ix_useradmin_id` (`id`)
+
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 LOCK TABLES `useradmin` WRITE;
 /*!40000 ALTER TABLE `useradmin` DISABLE KEYS */;
 INSERT INTO `useradmin` VALUES
-(1,'tomas','$2b$12$SHXJGzM4i.1fnWxRV2CmNuPRvJVktMVScppmHs0F5wQzUGJ8aVKM.');
+(1,'tomas','$2b$12$SHXJGzM4i.1fnWxRV2CmNuPRvJVktMVScppmHs0F5wQzUGJ8aVKM.','MKFKWT6AUPTLENUJ2TREDG65IHN6EDOZ');
+          
           
 
 /*!40000 ALTER TABLE `useradmin` ENABLE KEYS */;

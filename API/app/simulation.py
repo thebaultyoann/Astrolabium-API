@@ -1,4 +1,3 @@
-from datetime import datetime, timedelta
 import app.crud as crud
 
 def get_simulation(simulationDate, db):
