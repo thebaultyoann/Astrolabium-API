@@ -144,9 +144,9 @@ def login_the_user_for_access_token(form_data,db):
     )
     return {"access_token": access_token, "token_type": "bearer"}
 
-def login_the_user_admin_for_access_token(form_data,db):
+def login_the_user_admin_for_access_token(form_data, form_twofa, db):
     try:
-        user = authenticate_user_admin(db=db, username=form_data.username, password=form_data.password, twofa_code=form_data.twofa_code)
+        user = authenticate_user_admin(db=db, username=form_data.username, password=form_data.password, twofa_code=form_twofa.twofa_code)
     except:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

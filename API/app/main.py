@@ -90,10 +90,11 @@ async def login_for_access_token(
 
 @app.post("/login_admin", response_model=schema.Token)
 async def login_for_admin_access_token(
-    form_data: Annotated[OAuth2PasswordRequestForm,schema.TwoFaForm, Depends()],
+    form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
+    form_twofa: Annotated[schema.TwoFaForm, Depends()],
     db:Session = Depends(db.get_db_UserAdmin)
 ):
-    return authentification.login_the_user_admin_for_access_token(form_data=form_data, db=db)
+    return authentification.login_the_user_admin_for_access_token(form_data=form_data, form_twofa=form_twofa, db=db)
 
 @app.get("/user/me/", response_model=schema.User)
 async def read_user_me(
