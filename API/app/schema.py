@@ -68,10 +68,13 @@ class User(BaseModel):
 class UserPassword(User):
     password_hashed: str
 
+class UserTwoFA(UserPassword):
+    twofa_key: str
+
 class UserActivated(UserPassword):
     disabled: bool | None = None
 
-class TwoFaForm(BaseModel):
+class UserTwoFaForm(BaseModel):
     two_fa_code: str = Form(..., regex=r"^\d{6}$")
 
 class PasswordChangeForm(BaseModel):
