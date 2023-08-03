@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from fastapi import HTTPException, status
 import datetime
 import app.db as database
 import app.schema as schema
@@ -29,13 +30,34 @@ def get_user(db: Session, username: str):
     )
 
 def get_user_admin(db: Session, username: str):
-    user_dict = db.query(database.UserAdmin).filter((database.UserAdmin.username == username)).first()
-    return schema.UserTwoFA(
-        id=user_dict.id,
-        username=user_dict.username,
-        password_hashed=user_dict.password_hashed,
-        twofa_key=user_dict.twofa_key
-    )
+    try:
+        user_dict = db.query(database.UserAdmin).filter((database.UserAdmin.username == username)).first()
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=f"bug in crud {user_dict}",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    try:
+        returned = schema.UserTwoFA(
+            id=user_dict.id,
+            username=user_dict.username,
+            password_hashed=user_dict.password_hashed,
+            twofa_key=user_dict.twofa_key
+        )
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=f"bug in crud {user_dict.twofa_key}{user_dict.id}{user_dict.password_hashed}{user_dict.username}",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=f"bug in crud {user_dict.twofa_key}{user_dict.id}{user_dict.password_hashed}{user_dict.username}",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    return returned
+
 
 def change_user_password(db: Session, username:str, new_password_hashed:str):
     user = db.query(database.Users).filter((database.Users.username == username)).first()
