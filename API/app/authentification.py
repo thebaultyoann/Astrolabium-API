@@ -25,11 +25,9 @@ def verify_password(plain_password, hashed_password):
 def get_password_hash(password):
     return pwd_context.hash(password)
 
-def verify_twofa(twofa_code, key):
+def verify_twofa(twofa_code:str, key):
     totp = pyotp.TOTP(key)
-    if totp.now()==twofa_code:
-        return True
-    return False
+    return totp.now()==twofa_code
 
 def authenticate_user(db: Session, username: str, password: str):
     user = crud.get_user(db, username)
