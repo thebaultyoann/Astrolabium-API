@@ -43,8 +43,15 @@ def authenticate_user_admin(db: Session, username: str, password: str, twofa_cod
         return False
     if not verify_password(password, user.password_hashed):
         return False
-    if not verify_twofa(twofa_code=twofa_code, key=user.twofa_key):
-        return False
+    try :
+        if not verify_twofa(twofa_code=twofa_code, key=user.twofa_key):
+            return False
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=f"wrong here {user.twofa_key}{twofa_code} ",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
     return user
 
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
