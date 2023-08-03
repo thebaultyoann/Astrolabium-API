@@ -34,6 +34,7 @@ class UserAdmin(Base3):
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String(4),  unique=True, index=True)
     password_hashed = Column(String(60))
+    twofa_key = Column(String(32))
 
 SessionLocalAPI = sessionmaker(autocommit=False, autoflush=False, bind=engineAPI)
 SessionLocalAPIAdmin = sessionmaker(autocommit=False, autoflush=False, bind=engineAPIAdmin)
