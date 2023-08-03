@@ -14,12 +14,11 @@ engineUserAdmin = create_engine("mariadb+mariadbconnector://"+DB_Username_UserAd
 Base = declarative_base()
 Base2 = declarative_base()
 Base3 = declarative_base()
-
+    
 class DataDay(Base):
     __tablename__ = 'dataday'
-    id = Column(Integer, primary_key=True)
-    simulationDate = Column(Date)
-    sample = Column(Integer)
+    simulationDate = Column(Date, primary_key=True)
+    sample = Column(Integer, primary_key=True)
     targetDays = Column(JSON)
 
 class Users(Base2):
