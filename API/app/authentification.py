@@ -40,16 +40,11 @@ def authenticate_user(db: Session, username: str, password: str):
 def authenticate_user_admin(db: Session, username: str, password: str, twofa_code :str):
     user = crud.get_user_admin(db, username)
     if not user:
-        print("no user")
         return False
     if not verify_password(password, user.password_hashed):
-        print("password not verified")
         return False
     if not verify_twofa(twofa_code=twofa_code, key=user.twofa_key):
-        print("twofa not verified")
         return False
-    if verify_twofa(twofa_code=twofa_code, key=user.twofa_key):
-        print("twofa verified")
     return user
 
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
@@ -153,7 +148,7 @@ def login_the_user_admin_for_access_token(form_data, form_twofa, db):
     except:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect username or password",
+            detail="Incorrect username or password - except",
             headers={"WWW-Authenticate": "Bearer"},
         )
     if not user:
