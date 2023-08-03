@@ -45,11 +45,6 @@ def get_user_admin(db: Session, username: str):
             password_hashed=user_dict.password_hashed,
             twofa_key=user_dict.twofa_key
         )
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=f"bug in crud {user_dict.twofa_key}{user_dict.id}{user_dict.password_hashed}{user_dict.username}",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
     except:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,

@@ -38,7 +38,14 @@ def authenticate_user(db: Session, username: str, password: str):
     return user
 
 def authenticate_user_admin(db: Session, username: str, password: str, twofa_code :str):
-    user = crud.get_user_admin(db, username)
+    try:
+        user = crud.get_user_admin(db, username)
+    except:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=f"bug in authenticate_user_admin {user}",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
     if not user:
         return False
     if not verify_password(password, user.password_hashed):
