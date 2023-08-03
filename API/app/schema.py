@@ -75,7 +75,7 @@ class UserActivated(UserPassword):
     disabled: bool | None = None
 
 class TwoFaForm(BaseModel):
-    two_fa_code: str = Form(..., regex=r"^\d{6}$")
+    twofa_code: str = Form(..., regex=r"^\d{6}$")
 
 class PasswordChangeForm(BaseModel):
     old_password_plain: Annotated[str, Form(..., description="Your old password")]
