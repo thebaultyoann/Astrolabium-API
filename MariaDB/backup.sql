@@ -56,8 +56,8 @@ CREATE TABLE `datahour` (
 ) ENGINE=InnoDB /*AUTO_INCREMENT=25 */DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
-CREATE DATABASE IF NOT EXISTS espf_user;
-USE espf_user;
+CREATE DATABASE IF NOT EXISTS espf_users;
+USE espf_users;
 
 --
 -- Table structure for table `useradmin`
