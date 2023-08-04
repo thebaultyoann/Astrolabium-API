@@ -15,7 +15,7 @@ db.Base3.metadata.create_all(bind=db.engineUserAdmin)
 app = FastAPI()
 
 #Endpoints for data
-@app.post("/simulationForDays", response_model=list[schema.DataDay])
+@app.post("/simulationLongModel", response_model=list[schema.DataDay])
 def get_Simulation_For_Days(
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
     payload: schema.DataDayBase,
@@ -23,7 +23,7 @@ def get_Simulation_For_Days(
 ):
     return simulation.getSimulationForDays(simulationDate=payload.simulationDate, db=db)
 
-@app.post("/simulationForHours", response_model=list[schema.DataHour])
+@app.post("/simulationShortModel", response_model=list[schema.DataHour])
 def get_Simulation_For_Hours(
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
     payload: schema.DataHourBase,
@@ -31,7 +31,7 @@ def get_Simulation_For_Hours(
 ):
     return simulation.getSimulationForHours(simulationDate=payload.simulationDate, db=db)
 
-@app.post("/simulationSampleForDays", response_model=schema.DataDay)
+@app.post("/simulationSampleLongModel", response_model=schema.DataDay)
 def get_Simulation_Sample_For_Days(
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
     payload : schema.DataDaySample,
@@ -39,7 +39,7 @@ def get_Simulation_Sample_For_Days(
 ):
     return simulation.getSimulationSampleForDays(simulationDate=payload.simulationDate,sample=payload.sample,db=db)
 
-@app.post("/simulationSampleForHours", response_model=schema.DataHour)
+@app.post("/simulationSampleShortModel", response_model=schema.DataHour)
 def get_Simulation_Sample_For_Hours(
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
     payload : schema.DataHourSample,
@@ -71,7 +71,7 @@ def get_Simulation_Sample(
 ):
     return simulation.get_simulation_hundred_sample(simulationDate=payload.simulationDate,sampleStart=payload.sampleStart,db=db)
 
-@app.post("/simulationForTargetDay", response_model=list[schema.DataDayForTargetedDay])
+@app.post("/simulationLongModelForTargetDay", response_model=list[schema.DataDayForTargetedDay])
 async def get_Simulation_For_Target_Day(
     current_user: Annotated[schema.User,Depends(authentification.get_current_active_user)],
     payload: schema.DataDayTargetedDay,
@@ -88,7 +88,7 @@ async def get_Simulation_For_Target_Hour(
     return simulation.getSimulationForTargetHour(simulationDate=payload.simulationDate,targetedHour=payload.targetedHour,db=db)
 
 
-@app.post("/addSimulationForDays", response_model=schema.validationOnUpload)
+@app.post("/addSimulationLongModel", response_model=schema.validationOnUpload)
 def add_Simulation_For_Days(
     #current_admin_user: Annotated[schema.User, Depends(authentification.get_current_admin_user)],
     payload: list[schema.DataDayInput],
@@ -96,7 +96,7 @@ def add_Simulation_For_Days(
 ):
     return simulation.addSimulationForDays(dict=payload, db=db)
 
-@app.post("/addSimulationForHours", response_model=schema.validationOnUpload)
+@app.post("/addSimulationShortModel", response_model=schema.validationOnUpload)
 def add_Simulation_For_Hours(
     #current_admin_user: Annotated[schema.User, Depends(authentification.get_current_admin_user)],
     payload: list[schema.DataHourInput],
@@ -104,7 +104,7 @@ def add_Simulation_For_Hours(
 ):
     return simulation.addSimulationForHours(dict=payload, db=db)
 
-@app.post("/addSimulationOneByOneForDays", response_model=schema.validationOnUpload)
+@app.post("/addSimulationOneByOneLongModel", response_model=schema.validationOnUpload)
 def addSimulation(
     #current_admin_user: Annotated[schema.User, Depends(authentification.get_current_admin_user)],
     payload: schema.DataDayInput,
@@ -112,7 +112,7 @@ def addSimulation(
 ):
     return simulation.addSimulationOneByOneForDays(dict=payload, db=db)
 
-@app.post("/addSimulationOneByOneForHours", response_model=schema.validationOnUpload)
+@app.post("/addSimulationOneByOneShortModel", response_model=schema.validationOnUpload)
 def addSimulation(
     #current_admin_user: Annotated[schema.User, Depends(authentification.get_current_admin_user)],
     payload: schema.DataHourInput,
