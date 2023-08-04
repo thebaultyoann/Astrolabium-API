@@ -38,13 +38,13 @@ class DataHourSample(DataHourBase):
     sample : int = Field(..., ge=sampleMin, le=sampleMax, description=f"From {sampleMin} to {sampleMax}", example=1)
 
 class DataDayTenThousandSample(DataDayBase):
-    sampleStart : int = Field(..., ge=sampleMin, le=sampleMax-10000, description=f"From {sampleMin} to {sampleMax-10000}, give the 10000 following samples", example=1)
+    sampleStart : int = Field(..., ge=sampleMin, le=sampleMax-9999, description=f"From {sampleMin} to {sampleMax-9999}, give the 10000 following samples", example=1)
 
 class DataDayThousandSample(DataDayBase):
-    sampleStart : int = Field(..., ge=sampleMin, le=sampleMax-1000, description=f"From {sampleMin} to {sampleMax-1000}, give the 1000 following samples", example=1)
+    sampleStart : int = Field(..., ge=sampleMin, le=sampleMax-999, description=f"From {sampleMin} to {sampleMax-999}, give the 1000 following samples", example=1)
 
 class DataDayHundredSample(DataDayBase):
-    sampleStart : int = Field(..., ge=sampleMin, le=sampleMax-100, description=f"From {sampleMin} to {sampleMax-100}, give the 100 following samples", example=1)
+    sampleStart : int = Field(..., ge=sampleMin, le=sampleMax-99, description=f"From {sampleMin} to {sampleMax-99}, give the 100 following samples", example=1)
 
 class DataDayTargetedDay(DataDayBase):
     targetedDay : int = Field(..., ge=targetDayMin, le=targetDayMax, description="From 1 to 180", example=34)
