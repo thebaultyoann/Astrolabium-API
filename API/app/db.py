@@ -21,6 +21,12 @@ class DataDay(Base):
     sample = Column(Integer, primary_key=True)
     targetDays = Column(JSON)
 
+class DataHour(Base):
+    __tablename__ = 'datahour'
+    simulationDate = Column(Date, primary_key=True)
+    sample = Column(Integer, primary_key=True)
+    targetHours = Column(JSON)
+
 class Users(Base2):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True, index=True)

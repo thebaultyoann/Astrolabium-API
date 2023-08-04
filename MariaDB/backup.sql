@@ -15,8 +15,8 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-CREATE DATABASE IF NOT EXISTS astrolabium;
-USE astrolabium;
+CREATE DATABASE IF NOT EXISTS espf_api;
+USE espf_api;
 
 --
 -- Table structure for table `testwithdict`
@@ -47,6 +47,17 @@ INSERT INTO `dataday` VALUES
 /*!40000 ALTER TABLE `dataday` ENABLE KEYS */;
 UNLOCK TABLES;
 */
+CREATE TABLE `datahour` (
+/* `id` int(11) NOT NULL AUTO_INCREMENT, */
+  `simulationDate` date DEFAULT NULL,
+  `sample` float DEFAULT NULL,
+  `targetHours` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+  PRIMARY KEY (`simulationDate`, `sample`)
+) ENGINE=InnoDB /*AUTO_INCREMENT=25 */DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+CREATE DATABASE IF NOT EXISTS espf_user;
+USE espf_user;
 
 --
 -- Table structure for table `useradmin`

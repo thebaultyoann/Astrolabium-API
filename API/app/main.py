@@ -15,21 +15,37 @@ db.Base3.metadata.create_all(bind=db.engineUserAdmin)
 app = FastAPI()
 
 #Endpoints for data
-@app.post("/simulation", response_model=list[schema.DataDay])
-def get_Simulation(
+@app.post("/simulationForDays", response_model=list[schema.DataDay])
+def get_Simulation_For_Days(
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
     payload: schema.DataDayBase,
     db: Session = Depends(db.get_db_API)
 ):
-    return simulation.get_simulation(simulationDate=payload.simulationDate, db=db)
+    return simulation.getSimulationForDays(simulationDate=payload.simulationDate, db=db)
 
-@app.post("/simulationSample", response_model=schema.DataDay)
-def get_Simulation_Sample(
+@app.post("/simulationForHours", response_model=list[schema.DataHour])
+def get_Simulation_For_Hours(
+    current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
+    payload: schema.DataHourBase,
+    db: Session = Depends(db.get_db_API)
+):
+    return simulation.getSimulationForHours(simulationDate=payload.simulationDate, db=db)
+
+@app.post("/simulationSampleForDays", response_model=schema.DataDay)
+def get_Simulation_Sample_For_Days(
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
     payload : schema.DataDaySample,
     db:Session = Depends(db.get_db_API)
 ):
-    return simulation.get_simulation_sample(simulationDate=payload.simulationDate,sample=payload.sample,db=db)
+    return simulation.getSimulationSampleForDays(simulationDate=payload.simulationDate,sample=payload.sample,db=db)
+
+@app.post("/simulationSampleForHours", response_model=schema.DataHour)
+def get_Simulation_Sample_For_Hours(
+    current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
+    payload : schema.DataHourSample,
+    db:Session = Depends(db.get_db_API)
+):
+    return simulation.getSimulationSampleForHours(simulationDate=payload.simulationDate,sample=payload.sample,db=db)
 
 @app.post("/simulationTenThousandSample", response_model=list[schema.DataDay])
 def get_Simulation_Sample(
@@ -38,7 +54,6 @@ def get_Simulation_Sample(
     db:Session = Depends(db.get_db_API)
 ):
     return simulation.get_simulation_ten_thousand_sample(simulationDate=payload.simulationDate,sampleStart=payload.sampleStart,db=db)
-
 
 @app.post("/simulationThousandSample", response_model=list[schema.DataDay])
 def get_Simulation_Sample(
@@ -62,23 +77,48 @@ async def get_Simulation_For_Target_Day(
     payload: schema.DataDayTargetedDay,
     db:Session = Depends(db.get_db_API)
 ):
-    return simulation.get_simulation_for_target_day(simulationDate=payload.simulationDate,targetedDay=payload.targetedDay,db=db)
+    return simulation.getSimulationForTargetDay(simulationDate=payload.simulationDate,targetedDay=payload.targetedDay,db=db)
 
-@app.post("/addSimulation", response_model=schema.validationOnUpload)
-def addSimulation(
+@app.post("/simulationForTargetHour", response_model=list[schema.DataHourForTargetedHour])
+async def get_Simulation_For_Target_Hour(
+    current_user: Annotated[schema.User,Depends(authentification.get_current_active_user)],
+    payload: schema.DataHourTargetedHour,
+    db:Session = Depends(db.get_db_API)
+):
+    return simulation.getSimulationForTargetHour(simulationDate=payload.simulationDate,targetedHour=payload.targetedHour,db=db)
+
+
+@app.post("/addSimulationForDays", response_model=schema.validationOnUpload)
+def add_Simulation_For_Days(
     #current_admin_user: Annotated[schema.User, Depends(authentification.get_current_admin_user)],
     payload: list[schema.DataDayInput],
     db:Session = Depends(db.get_db_APIAdmin)
 ):
-    return simulation.add_simulation(dict=payload, db=db)
+    return simulation.addSimulationForDays(dict=payload, db=db)
 
-@app.post("/addSimulationOneByOne", response_model=schema.validationOnUpload)
+@app.post("/addSimulationForHours", response_model=schema.validationOnUpload)
+def add_Simulation_For_Hours(
+    #current_admin_user: Annotated[schema.User, Depends(authentification.get_current_admin_user)],
+    payload: list[schema.DataHourInput],
+    db:Session = Depends(db.get_db_APIAdmin)
+):
+    return simulation.addSimulationForHours(dict=payload, db=db)
+
+@app.post("/addSimulationOneByOneForDays", response_model=schema.validationOnUpload)
 def addSimulation(
     #current_admin_user: Annotated[schema.User, Depends(authentification.get_current_admin_user)],
     payload: schema.DataDayInput,
     db:Session = Depends(db.get_db_APIAdmin)
 ):
-    return simulation.add_simulation_one_by_one(dict=payload, db=db)
+    return simulation.addSimulationOneByOneForDays(dict=payload, db=db)
+
+@app.post("/addSimulationOneByOneForHours", response_model=schema.validationOnUpload)
+def addSimulation(
+    #current_admin_user: Annotated[schema.User, Depends(authentification.get_current_admin_user)],
+    payload: schema.DataHourInput,
+    db:Session = Depends(db.get_db_APIAdmin)
+):
+    return simulation.addSimulationOneByOneForHours(dict=payload, db=db)
 
 #Endpoints for authentification
 @app.post("/login", response_model=schema.Token)

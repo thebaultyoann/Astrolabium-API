@@ -6,6 +6,6 @@ uvicorn>=0.22.0
 mariadb>=1.1.6
 python-multipart
 pyotp
-
+numpy
 
 
