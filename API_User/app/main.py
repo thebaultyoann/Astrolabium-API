@@ -45,6 +45,7 @@ app = FastAPI()
 
 data_sending_lock = asyncio.Lock()
 
+wait = 0
 #Endpoints for data
 @app.post("/simulationLongModel", response_model=list[schema.DataDay])
 #@handle_connexions
@@ -53,9 +54,13 @@ async def get_Simulation_For_Days(
     payload: schema.DataDayBase,
     db: Session = Depends(db.get_db_API)
 ):
-    async with data_sending_lock:
-        await asyncio.sleep(100) 
-        return simulation.getSimulationForDays(simulationDate=payload.simulationDate, db=db)
+    global wait 
+    async with data_sending_lock: 
+        await asyncio.sleep(wait*60)
+        wait = wait+1
+        data = simulation.getSimulationForDays(simulationDate=payload.simulationDate, db=db)
+        wait = wait-1
+        return data
 
 @app.post("/simulationShortModel", response_model=list[schema.DataHour])
 async def get_Simulation_For_Hours(
