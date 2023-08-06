@@ -13,49 +13,57 @@ db.Base.metadata.create_all(bind=db.engineAPI)
 db.Base2.metadata.create_all(bind=db.engineUsers)
 
 
-queue = []
-queue_numbers = 0
-def handle_connexions(func):
-    @wraps(func)
-    async def wrapper(*args, **kwargs):
-        numero_queue = get_in_queue()
-        while not check_queue(numero_queue):
-            await asyncio.sleep(5)
-        return await func(*args, **kwargs)
-    return wrapper
+# queue = []
+# queue_numbers = 0
+# def handle_connexions(func):
+#     @wraps(func)
+#     async def wrapper(*args, **kwargs):
+#         numero_queue = get_in_queue()
+#         while not check_queue(numero_queue):
+#             await asyncio.sleep(10)
+#         return await func(*args, **kwargs)
+#     return wrapper
 
-def get_in_queue():
-    global queue_numbers
-    queue_numbers=(queue_numbers+1)%10000
-    queue.append(queue_numbers)
-    return queue_numbers
+# def get_in_queue():
+#     global queue_numbers
+#     queue_numbers=(queue_numbers+1)%10000
+#     queue.append(queue_numbers)
+#     return queue_numbers
 
-def check_queue(numero_queue):
-    return queue[0]==numero_queue
+# def check_queue(numero_queue):
+#     return queue[0]==numero_queue
 
-def drop_from_queue():
-    queue.pop(0)
+# def drop_from_queue():
+#     queue.pop(0)
 
 
 
 #drop the first item
 #when first or second, can get out of the wrapper to get working
 
-
 app = FastAPI()
 
+data_sending_lock = asyncio.Lock()
 
 #Endpoints for data
 @app.post("/simulationLongModel", response_model=list[schema.DataDay])
-@handle_connexions
+#@handle_connexions
 async def get_Simulation_For_Days(
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
     payload: schema.DataDayBase,
     db: Session = Depends(db.get_db_API)
 ):
-    data=simulation.getSimulationForDays(simulationDate=payload.simulationDate, db=db)
-    drop_from_queue()
-    return data
+    async with data_sending_lock:
+        return simulation.getSimulationForDays(simulationDate=payload.simulationDate, db=db)
+
+@app.post("/simulationLongModel2", response_model=list[schema.DataDay])
+#@handle_connexions
+async def get_Simulation_For_Days(
+    current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
+    payload: schema.DataDayBase,
+    db: Session = Depends(db.get_db_API)
+):
+    return simulation.getSimulationForDays2(simulationDate=payload.simulationDate, db=db)
 
 @app.post("/simulationShortModel", response_model=list[schema.DataHour])
 async def get_Simulation_For_Hours(
