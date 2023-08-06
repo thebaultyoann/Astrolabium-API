@@ -8,4 +8,4 @@ mariadb>=1.1.6
 python-multipart
 numpy
 fastapi-queue
-aioredis<2.0.0
+redis<2.0.0
