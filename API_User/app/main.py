@@ -1,4 +1,4 @@
-from fastapi import Depends, FastAPI, Body, Query
+from fastapi import Depends, FastAPI
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from typing import Annotated
@@ -6,13 +6,30 @@ import app.schema as schema
 import app.db as db
 import app.authentification as authentification
 import app.simulation as simulation
+import asyncio
+import asyncio
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.requests import Request
+from starlette.types import ASGIApp
 
+class ConcurrencyLimiterMiddleware(BaseHTTPMiddleware):
+    sem: asyncio.Semaphore
+
+    def __init__(self, app: ASGIApp, max_connections: int = 100):
+        super().__init__(app)
+        self.sem = asyncio.Semaphore(max_connections)
+
+    async def dispatch(self, request: Request, call_next):
+        async with self.sem:
+            response = await call_next(request)
+        return response
+    
 db.Base.metadata.create_all(bind=db.engineAPI)
-db.Base.metadata.create_all(bind=db.engineAPIAdmin)
 db.Base2.metadata.create_all(bind=db.engineUsers)
-db.Base3.metadata.create_all(bind=db.engineUserAdmin)
 
 app = FastAPI()
+app.add_middleware(ConcurrencyLimiterMiddleware, max_connections=2)
+
 
 #Endpoints for data
 @app.post("/simulationLongModel", response_model=list[schema.DataDay])
@@ -88,38 +105,6 @@ async def get_Simulation_For_Target_Hour(
     return simulation.getSimulationForTargetHour(simulationDate=payload.simulationDate,targetedHour=payload.targetedHour,db=db)
 
 
-@app.post("/addSimulationLongModel", response_model=schema.validationOnUpload)
-def add_Simulation_For_Days(
-    #current_admin_user: Annotated[schema.User, Depends(authentification.get_current_admin_user)],
-    payload: list[schema.DataDayInput],
-    db:Session = Depends(db.get_db_APIAdmin)
-):
-    return simulation.addSimulationForDays(dict=payload, db=db)
-
-@app.post("/addSimulationShortModel", response_model=schema.validationOnUpload)
-def add_Simulation_For_Hours(
-    #current_admin_user: Annotated[schema.User, Depends(authentification.get_current_admin_user)],
-    payload: list[schema.DataHourInput],
-    db:Session = Depends(db.get_db_APIAdmin)
-):
-    return simulation.addSimulationForHours(dict=payload, db=db)
-
-@app.post("/addSimulationOneByOneLongModel", response_model=schema.validationOnUpload)
-def addSimulation(
-    #current_admin_user: Annotated[schema.User, Depends(authentification.get_current_admin_user)],
-    payload: schema.DataDayInput,
-    db:Session = Depends(db.get_db_APIAdmin)
-):
-    return simulation.addSimulationOneByOneForDays(dict=payload, db=db)
-
-@app.post("/addSimulationOneByOneShortModel", response_model=schema.validationOnUpload)
-def addSimulation(
-    #current_admin_user: Annotated[schema.User, Depends(authentification.get_current_admin_user)],
-    payload: schema.DataHourInput,
-    db:Session = Depends(db.get_db_APIAdmin)
-):
-    return simulation.addSimulationOneByOneForHours(dict=payload, db=db)
-
 #Endpoints for authentification
 @app.post("/login", response_model=schema.Token)
 async def login_for_access_token(
@@ -128,23 +113,8 @@ async def login_for_access_token(
 ):
     return authentification.login_the_user_for_access_token(form_data=form_data,db=db)
 
-@app.post("/login_admin", response_model=schema.Token)
-async def login_for_admin_access_token(
-    form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
-    form_twofa: Annotated[schema.TwoFaForm, Depends()],
-    db:Session = Depends(db.get_db_UserAdmin)
-):
-    return authentification.login_the_user_admin_for_access_token(form_data=form_data, form_twofa=form_twofa, db=db)
-
 @app.get("/user/me/", response_model=schema.User)
 async def read_user_me(
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)]
 ):
     return current_user
-
-
-# here some modifications needs to me made, first have a new user able to modify the data inside the dataday and datahours
-# so we need routes to modify thoses with specific data specified
-# we do we let the user modify its own password? the route already exists but means the user used by these get rights on modification on the table 
- 
-#adding a route following a isngle day 

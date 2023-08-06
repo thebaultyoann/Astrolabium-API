@@ -1,5 +1,4 @@
 from sqlalchemy.orm import Session
-from fastapi import HTTPException, status
 import datetime
 import app.db as database
 import app.schema as schema
@@ -15,18 +14,6 @@ def get_sample_for_days_from_db(db: Session, simulationDate: datetime.date, samp
 
 def get_sample_for_hours_from_db(db: Session, simulationDate: datetime.date, sample: float):
     return db.query(database.DataHour).filter((database.DataHour.simulationDate == simulationDate)&(database.DataHour.sample == sample)).first()
-
-def add_simulation_for_days_on_db(db:Session, simulationDate: datetime.date, sample: float, targetDays: dict):
-    new_simulation = database.DataDay(simulationDate=simulationDate, sample=sample, targetDays=targetDays)
-    db.add(new_simulation)
-    db.commit()
-    return True
-
-def add_simulation_for_hours_on_db(db:Session, simulationDate: datetime.date, sample: float, targetHours: dict):
-    new_simulation = database.DataHour(simulationDate=simulationDate, sample=sample, targetHours=targetHours)
-    db.add(new_simulation)
-    db.commit()
-    return True
 
 def get_user(db: Session, username: str):
     user_dict = db.query(database.Users).filter((database.Users.username == username)).first()

@@ -1,6 +1,5 @@
-from pydantic import BaseModel, Json, Field
+from pydantic import BaseModel, Field
 from fastapi import Form
-from typing import Annotated
 from datetime import date 
 import numpy as np
 
@@ -10,10 +9,10 @@ sampleMin=1
 sampleMax=100000
 
 targetDayMin=1
-targetDayMax=180
+targetDayMax=181
 
 targetHourMin=1
-targetHourMax=24
+targetHourMax=49
 
 
 #Simulation
@@ -22,14 +21,14 @@ class DataDayBase(BaseModel):
 
 class DataDay(DataDayBase):
     sample : int = Field(..., example=1)
-    targetDays : dict[str,float] = Field(..., example={str(i): float(np.random.random()*100) for i in range(1, 180)})
+    targetDays : dict[str,float] = Field(..., example={str(i): float(np.random.random()*100) for i in range(1, 181)})
 
 class DataHourBase(BaseModel):
     simulationDate: date
 
 class DataHour(DataHourBase):
     sample : int = Field(..., example=1)
-    targetHours : dict[str, float] = Field(..., example={str(i): float(np.random.random()*100) for i in range(1, 24)})
+    targetHours : dict[str, float] = Field(..., example={str(i): float(np.random.random()*100) for i in range(1, 49)})
 
 class DataDaySample(DataDayBase):
     sample : int = Field(..., ge=sampleMin, le=sampleMax, description=f"From {sampleMin} to {sampleMax}", example=1)
@@ -61,21 +60,6 @@ class DataHourForTargetedHour(DataHourBase):
     targetHours: dict[str,float] = Field(..., example={'24':0})
 
 
-#Simulation Class (Admin)
-class validationOnUpload(BaseModel):
-    uploadSucess: bool      
-
-class DataDayInput(BaseModel):
-        simulationDate: date
-        sample: int
-        targetDays : dict[str,float]
-
-class DataHourInput(BaseModel):
-        simulationDate: date
-        sample: int
-        targetHours : dict[str,float]
-
-
 #Authentifiation Class
 class Token(BaseModel):
     access_token: str
@@ -90,15 +74,8 @@ class User(BaseModel):
 class UserPassword(User):
     password_hashed: str
 
-class UserTwoFA(UserPassword):
-    twofa_key: str
-
 class UserActivated(UserPassword):
     disabled: bool | None = None
-
-class TwoFaForm(BaseModel):
-    twofa_code: str = Form(..., regex=r"^\d{6}$")   
-
 
 
 

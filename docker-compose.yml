@@ -8,10 +8,7 @@ services:
     command:
       - "--api.insecure=true"
       - "--providers.docker=true"
-      #- "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443" 
-      #- "--certificatesresolvers.myresolver.acme.httpchallenge=true"
-      #- "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
       - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
       ################################################ insert your email here ################
       - "--certificatesresolvers.myresolver.acme.email=thebaultyoann56@gmail.com"
@@ -33,14 +30,14 @@ services:
   
   fastapi:
     build:
-      context: ./API/
+      context: ./API_User/
       dockerfile: Dockerfile
     volumes:
       - "./files:/files"
     labels:
       - 'traefik.enable=true'
       ####################################### insert your domain name here ################
-      - 'traefik.http.routers.fastapi.rule=Host(`astrolabium.gotdns.ch`) && PathPrefix(`/`)'
+      - 'traefik.http.routers.fastapi.rule=Host(`api.astrolabium.gotdns.ch`) && PathPrefix(`/`)'
       - 'traefik.http.routers.fastapi.entrypoints=websecure'
       - "traefik.http.routers.fastapi.tls.certresolver=myresolver"
       - 'traefik.http.routers.fastapi.tls=true'
@@ -49,5 +46,25 @@ services:
     depends_on:
       - mariadb
     command: bash -c "sleep 10 && gunicorn app.main:app --workers 2 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000"
+    restart: "on-failure:5"
+
+  fastapi:
+    build:
+      context: ./API_Admin/
+      dockerfile: Dockerfile
+    volumes:
+      - "./files:/files"
+    labels:
+      - 'traefik.enable=true'
+      ####################################### insert your domain name here ################
+      - 'traefik.http.routers.fastapi.rule=Host(`admin.astrolabium.gotdns.ch`) && PathPrefix(`/`)'
+      - 'traefik.http.routers.fastapi.entrypoints=websecure'
+      - "traefik.http.routers.fastapi.tls.certresolver=myresolver"
+      - 'traefik.http.routers.fastapi.tls=true'
+      - 'traefik.http.services.fastapi.loadbalancer.server.port=8001'
+    container_name: fastapi
+    depends_on:
+      - mariadb
+    command: bash -c "sleep 10 && uvicorn app.main:app --host 0.0.0.0 --port 8001"
     restart: "on-failure:5"
 
