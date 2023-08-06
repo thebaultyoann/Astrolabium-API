@@ -7,5 +7,5 @@ gunicorn
 mariadb>=1.1.6
 python-multipart
 numpy
-fastapi-queue==x.x.x
+fastapi-queue
 aioredis<2.0.0
