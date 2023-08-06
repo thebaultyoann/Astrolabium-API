@@ -7,34 +7,36 @@ import app.db as db
 import app.authentification as authentification
 import app.simulation as simulation
 import asyncio
-import queue
 from functools import wraps
 
 db.Base.metadata.create_all(bind=db.engineAPI)
 db.Base2.metadata.create_all(bind=db.engineUsers)
 
 
-queue_instance = queue.Queue(maxsize=10000)
+queue = []
 queue_numbers = 1
 def handle_connexions(func):
     @wraps(func)
-    async def wrapper(*args, **kwargs):
-        numero_queue = get_in_queue()
+    async def wrapper(request: Request, *args, **kwargs):
+        numero_queue = await get_in_queue()
         while not check_queue(numero_queue):
             await asyncio.wait(1)
-        return await func(*args, **kwargs)
+        return await func(request, *args, **kwargs, numero_queue)
     return wrapper
 
 async def get_in_queue():
-    numero_queue = queue_instance.get()
-    queue_instance.put(numero_queue)
-    return numero_queue
+    queue_numbers=(queue_numbers+1)%10000
+    queue.append(queue_numbers)
+    return queue_numbers
 
 def check_queue(numero_queue):
-    return queue_instance.queue[0] == numero_queue
-    
+    if queue[0]==numero_queue:
+        return True
+    return False
+
 def drop_from_queue():
-    queue_instance.get_nowait()
+    queue.pop(0)
+
 
 
 #drop the first item
@@ -46,7 +48,6 @@ app = FastAPI()
 
 #Endpoints for data
 @app.post("/simulationLongModel", response_model=list[schema.DataDay])
-@handle_connexions
 async def get_Simulation_For_Days(
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
     payload: schema.DataDayBase,
