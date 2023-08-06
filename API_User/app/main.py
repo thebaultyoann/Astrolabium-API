@@ -24,7 +24,7 @@ def handle_connexions(func):
         return await func(*args, **kwargs)
     return wrapper
 
-async def get_in_queue():
+def get_in_queue():
     global queue_numbers
     queue_numbers=(queue_numbers+1)%10000
     queue.append(queue_numbers)
