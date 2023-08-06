@@ -7,7 +7,7 @@ import app.schema as schema
 import app.db as db
 import app.authentification as authentification
 import app.simulation as simulation
-import aioredis
+import redis
 from fastapi_queue import DistributedTaskApplyManager
 
 redis = aioredis.Redis.from_url("redis://localhost")
