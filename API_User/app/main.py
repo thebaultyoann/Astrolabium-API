@@ -20,8 +20,7 @@ class ConcurrencyLimiterMiddleware(BaseHTTPMiddleware):
 
     def __init__(self, app: ASGIApp, max_connections: int = 100):
         super().__init__(app)
-        self.request_queue = Queue()
-        self.max_connections = max_connections
+        self.request_queue = Queue(maxsize=max_connections)
 
     async def dispatch(self, request: Request, call_next):
         await self.request_queue.put(request)  # Enqueue the request
