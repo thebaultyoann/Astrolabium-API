@@ -1,13 +1,17 @@
 from fastapi import Depends, FastAPI, Request
 from fastapi.security import OAuth2PasswordRequestForm
+from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from typing import Annotated
 import app.schema as schema
 import app.db as db
 import app.authentification as authentification
 import app.simulation as simulation
-import asyncio
-from functools import wraps
+import aioredis
+from fastapi_queue import DistributedTaskApplyManager
+
+redis = aioredis.Redis.from_url("redis://localhost")
+
 
 db.Base.metadata.create_all(bind=db.engineAPI)
 db.Base2.metadata.create_all(bind=db.engineUsers)
@@ -43,24 +47,37 @@ db.Base2.metadata.create_all(bind=db.engineUsers)
 
 app = FastAPI()
 
-data_sending_lock = asyncio.Lock()
-
 wait = 0
 #Endpoints for data
+async def execute_task(simulationDate: str, db: Session):
+    return await simulation.getSimulationForDays(simulationDate=simulationDate, db=db)
+
 @app.post("/simulationLongModel", response_model=list[schema.DataDay])
-#@handle_connexions
 async def get_Simulation_For_Days(
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
     payload: schema.DataDayBase,
-    db: Session = Depends(db.get_db_API)
+    db: Session = Depends(db.get_db_API),
 ):
-    global wait 
-    async with data_sending_lock: 
-        await asyncio.sleep(wait*60)
-        wait = wait+1
-        data = simulation.getSimulationForDays(simulationDate=payload.simulationDate, db=db)
-        wait = wait-1
-        return data
+    success_status: bool = False
+    request = Request
+    async with DistributedTaskApplyManager(
+        redis=redis,
+        request_path=request.url.path,
+    ) as dtmanager:
+        if not dtmanager.success():
+            return JSONResponse(status_code=503, content="Service Temporarily Unavailable")
+
+        success_status, result = await dtmanager.rclt(
+            execute_task,
+            simulationDate=payload.simulationDate,
+            db=db
+        )
+        
+        if success_status:
+            return result
+        else:
+            return JSONResponse(status_code=500, content="Internal Server Error")
+
 
 @app.post("/simulationShortModel", response_model=list[schema.DataHour])
 async def get_Simulation_For_Hours(
