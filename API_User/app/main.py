@@ -1,4 +1,4 @@
-from fastapi import Depends, FastAPI
+from fastapi import Depends, FastAPI, Request
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from typing import Annotated
@@ -7,40 +7,47 @@ import app.db as db
 import app.authentification as authentification
 import app.simulation as simulation
 import asyncio
-from queue import Queue
-from starlette.middleware.base import BaseHTTPMiddleware
-from starlette.requests import Request
-from starlette.types import ASGIApp, Receive, Scope, Send
+import queue
+from functools import wraps
 
 db.Base.metadata.create_all(bind=db.engineAPI)
 db.Base2.metadata.create_all(bind=db.engineUsers)
 
-class ConcurrencyLimiterMiddleware(BaseHTTPMiddleware):
-    request_queue: Queue
 
-    def __init__(self, app: ASGIApp, max_connections: int = 100):
-        super().__init__(app)
-        self.request_queue = Queue(maxsize=max_connections)
+queue_instance = queue.Queue(maxsize=10000)
+queue_numbers = 1
+def handle_connexions(func):
+    @wraps(func)
+    async def wrapper(*args, **kwargs):
+        numero_queue = get_in_queue()
+        while not check_queue(numero_queue):
+            await asyncio.wait(1)
+        return await func(*args, **kwargs)
+    return wrapper
 
-    async def dispatch(self, request: Request, call_next):
-        await self.request_queue.put(request)  # Enqueue the request
-        try:
-            async with asyncio.Semaphore(self.max_connections):
-                while not self.request_queue.empty():
-                    queued_request = self.request_queue.get()  # Dequeue the request
-                    response = await call_next(queued_request)
-                    # Process the response if needed
-        finally:
-            self.request_queue.task_done()
+async def get_in_queue():
+    numero_queue = queue_instance.get()
+    queue_instance.put(numero_queue)
+    return numero_queue
+
+def check_queue(numero_queue):
+    return queue_instance.queue[0] == numero_queue
+    
+def drop_from_queue():
+    queue_instance.get_nowait()
+
+
+#drop the first item
+#when first or second, can get out of the wrapper to get working
+
 
 app = FastAPI()
-app.add_middleware(ConcurrencyLimiterMiddleware, max_connections=2)
-
 
 
 #Endpoints for data
 @app.post("/simulationLongModel", response_model=list[schema.DataDay])
-def get_Simulation_For_Days(
+@handle_connexions
+async def get_Simulation_For_Days(
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
     payload: schema.DataDayBase,
     db: Session = Depends(db.get_db_API)
@@ -48,7 +55,7 @@ def get_Simulation_For_Days(
     return simulation.getSimulationForDays(simulationDate=payload.simulationDate, db=db)
 
 @app.post("/simulationShortModel", response_model=list[schema.DataHour])
-def get_Simulation_For_Hours(
+async def get_Simulation_For_Hours(
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
     payload: schema.DataHourBase,
     db: Session = Depends(db.get_db_API)
