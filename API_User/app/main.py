@@ -14,10 +14,10 @@ db.Base2.metadata.create_all(bind=db.engineUsers)
 
 
 queue = []
-queue_numbers = 1
+queue_numbers = 0
 def handle_connexions(func):
     @wraps(func)
-    async def wrapper(request: Request, *args, **kwargs):
+    async def wrapper(*args, **kwargs):
         numero_queue = get_in_queue()
         while not check_queue(numero_queue):
             await asyncio.wait(1)
@@ -31,9 +31,7 @@ async def get_in_queue():
     return queue_numbers
 
 def check_queue(numero_queue):
-    if queue[0]==numero_queue:
-        return True
-    return False
+    return queue[0]==numero_queue
 
 def drop_from_queue():
     queue.pop(0)
@@ -49,6 +47,7 @@ app = FastAPI()
 
 #Endpoints for data
 @app.post("/simulationLongModel", response_model=list[schema.DataDay])
+@handle_connexions
 async def get_Simulation_For_Days(
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
     payload: schema.DataDayBase,
