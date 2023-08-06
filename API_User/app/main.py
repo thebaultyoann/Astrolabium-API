@@ -12,23 +12,31 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
 from starlette.types import ASGIApp
 
-class ConcurrencyLimiterMiddleware(BaseHTTPMiddleware):
-    sem: asyncio.Semaphore
-
-    def __init__(self, app: ASGIApp, max_connections: int = 100):
-        super().__init__(app)
-        self.sem = asyncio.Semaphore(max_connections)
-
-    async def dispatch(self, request: Request, call_next):
-        async with self.sem:
-            response = await call_next(request)
-        return response
-    
 db.Base.metadata.create_all(bind=db.engineAPI)
 db.Base2.metadata.create_all(bind=db.engineUsers)
 
+class ConcurrencyLimiterMiddleware(BaseHTTPMiddleware):
+    request_queue: Queue
+
+    def __init__(self, app: ASGIApp, max_connections: int = 100):
+        super().__init__(app)
+        self.request_queue = Queue()
+        self.max_connections = max_connections
+
+    async def dispatch(self, request: Request, call_next):
+        await self.request_queue.put(request)  # Enqueue the request
+        try:
+            async with asyncio.Semaphore(self.max_connections):
+                while not self.request_queue.empty():
+                    queued_request = self.request_queue.get()  # Dequeue the request
+                    response = await call_next(queued_request)
+                    # Process the response if needed
+        finally:
+            self.request_queue.task_done()
+
 app = FastAPI()
 app.add_middleware(ConcurrencyLimiterMiddleware, max_connections=2)
+
 
 
 #Endpoints for data
