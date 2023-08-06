@@ -45,7 +45,7 @@ services:
     container_name: fastapi-user
     depends_on:
       - mariadb
-    command: bash -c "sleep 10 && gunicorn app.main:app --workers 1 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000 --timeout 120"
+    command: bash -c "sleep 10 && gunicorn app.main:app --workers 2 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000 --timeout 240"
     restart: "on-failure:5"
 
   fastapi-admin:

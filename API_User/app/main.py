@@ -54,16 +54,8 @@ async def get_Simulation_For_Days(
     db: Session = Depends(db.get_db_API)
 ):
     async with data_sending_lock:
+        await asyncio.sleep(100) 
         return simulation.getSimulationForDays(simulationDate=payload.simulationDate, db=db)
-
-@app.post("/simulationLongModel2", response_model=list[schema.DataDay])
-#@handle_connexions
-async def get_Simulation_For_Days(
-    current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
-    payload: schema.DataDayBase,
-    db: Session = Depends(db.get_db_API)
-):
-    return simulation.getSimulationForDays2(simulationDate=payload.simulationDate, db=db)
 
 @app.post("/simulationShortModel", response_model=list[schema.DataHour])
 async def get_Simulation_For_Hours(
