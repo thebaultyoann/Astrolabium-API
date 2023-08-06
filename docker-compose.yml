@@ -28,7 +28,7 @@ services:
       - MYSQL_ROOT_PASSWORD=lol
     container_name: mariadb
   
-  fastapi:
+  fastapi-user:
     build:
       context: ./API_User/
       dockerfile: Dockerfile
@@ -42,13 +42,13 @@ services:
       - "traefik.http.routers.fastapi.tls.certresolver=myresolver"
       - 'traefik.http.routers.fastapi.tls=true'
       - 'traefik.http.services.fastapi.loadbalancer.server.port=8000'
-    container_name: fastapi
+    container_name: fastapi-user
     depends_on:
       - mariadb
     command: bash -c "sleep 10 && gunicorn app.main:app --workers 2 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000"
     restart: "on-failure:5"
 
-  fastapi:
+  fastapi-admin:
     build:
       context: ./API_Admin/
       dockerfile: Dockerfile
@@ -62,7 +62,7 @@ services:
       - "traefik.http.routers.fastapi.tls.certresolver=myresolver"
       - 'traefik.http.routers.fastapi.tls=true'
       - 'traefik.http.services.fastapi.loadbalancer.server.port=8001'
-    container_name: fastapi
+    container_name: fastapi-admin 
     depends_on:
       - mariadb
     command: bash -c "sleep 10 && uvicorn app.main:app --host 0.0.0.0 --port 8001"
