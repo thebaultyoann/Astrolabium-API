@@ -18,13 +18,14 @@ queue_numbers = 1
 def handle_connexions(func):
     @wraps(func)
     async def wrapper(request: Request, *args, **kwargs):
-        numero_queue = await get_in_queue()
+        numero_queue = get_in_queue()
         while not check_queue(numero_queue):
             await asyncio.wait(1)
         return await func(*args, **kwargs)
     return wrapper
 
 async def get_in_queue():
+    global queue_numbers
     queue_numbers=(queue_numbers+1)%10000
     queue.append(queue_numbers)
     return queue_numbers
