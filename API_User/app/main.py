@@ -53,7 +53,9 @@ async def get_Simulation_For_Days(
     payload: schema.DataDayBase,
     db: Session = Depends(db.get_db_API)
 ):
-    return simulation.getSimulationForDays(simulationDate=payload.simulationDate, db=db)
+    data=simulation.getSimulationForDays(simulationDate=payload.simulationDate, db=db)
+    drop_from_queue()
+    return data
 
 @app.post("/simulationShortModel", response_model=list[schema.DataHour])
 async def get_Simulation_For_Hours(
