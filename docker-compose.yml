@@ -37,11 +37,11 @@ services:
     labels:
       - 'traefik.enable=true'
       ####################################### insert your domain name here ################
-      - 'traefik.http.routers.fastapi.rule=Host(`api.astrolabium.gotdns.ch`) && PathPrefix(`/`)'
-      - 'traefik.http.routers.fastapi.entrypoints=websecure'
-      - "traefik.http.routers.fastapi.tls.certresolver=myresolver"
-      - 'traefik.http.routers.fastapi.tls=true'
-      - 'traefik.http.services.fastapi.loadbalancer.server.port=8000'
+      - 'traefik.http.routers.fastapi-user.rule=Host(`api.astrolabium.gotdns.ch`) && PathPrefix(`/`)'
+      - 'traefik.http.routers.fastapi-user.entrypoints=websecure'
+      - "traefik.http.routers.fastapi-user.tls.certresolver=myresolver"
+      - 'traefik.http.routers.fastapi-user.tls=true'
+      - 'traefik.http.services.fastapi-user.loadbalancer.server.port=8000'
     container_name: fastapi-user
     depends_on:
       - mariadb
@@ -57,11 +57,11 @@ services:
     labels:
       - 'traefik.enable=true'
       ####################################### insert your domain name here ################
-      - 'traefik.http.routers.fastapi.rule=Host(`admin.astrolabium.gotdns.ch`) && PathPrefix(`/`)'
-      - 'traefik.http.routers.fastapi.entrypoints=websecure'
-      - "traefik.http.routers.fastapi.tls.certresolver=myresolver"
-      - 'traefik.http.routers.fastapi.tls=true'
-      - 'traefik.http.services.fastapi.loadbalancer.server.port=8001'
+      - 'traefik.http.routers.fastapi-admin.rule=Host(`admin.astrolabium.gotdns.ch`) && PathPrefix(`/`)'
+      - 'traefik.http.routers.fastapi-admin.entrypoints=websecure'
+      - "traefik.http.routers.fastapi-admin.tls.certresolver=myresolver"
+      - 'traefik.http.routers.fastapi-admin.tls=true'
+      - 'traefik.http.services.fastapi-admin.loadbalancer.server.port=8001'
     container_name: fastapi-admin 
     depends_on:
       - mariadb
