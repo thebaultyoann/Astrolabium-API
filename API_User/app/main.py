@@ -21,7 +21,7 @@ def handle_connexions(func):
         numero_queue = await get_in_queue()
         while not check_queue(numero_queue):
             await asyncio.wait(1)
-        return await func(request, *args, **kwargs, numero_queue)
+        return await func(*args, **kwargs)
     return wrapper
 
 async def get_in_queue():
