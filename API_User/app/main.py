@@ -7,10 +7,10 @@ import app.db as db
 import app.authentification as authentification
 import app.simulation as simulation
 import asyncio
-import asyncio
+from queue import Queue
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
-from starlette.types import ASGIApp
+from starlette.types import ASGIApp, Receive, Scope, Send
 
 db.Base.metadata.create_all(bind=db.engineAPI)
 db.Base2.metadata.create_all(bind=db.engineUsers)
