@@ -7,41 +7,34 @@ import app.schema as schema
 import app.db as db
 import app.authentification as authentification
 import app.simulation as simulation
-import asyncio
+#import asyncio
+from concurrent.futures import ThreadPoolExecutor
+from threading import Semaphore
 
 db.Base.metadata.create_all(bind=db.engineAPI)
 db.Base2.metadata.create_all(bind=db.engineUsers)
 
-semaphore = asyncio.Semaphore(1)
-# queue = []
-# queue_numbers = 0
-# def handle_connexions(func):
-#     @wraps(func)
-#     async def wrapper(*args, **kwargs):
-#         numero_queue = get_in_queue()
-#         while not check_queue(numero_queue):
-#             await asyncio.sleep(10)
-#         return await func(*args, **kwargs)
-#     return wrapper
+#semaphore = asyncio.Semaphore(1)
 
-# def get_in_queue():
-#     global queue_numbers
-#     queue_numbers=(queue_numbers+1)%10000
-#     queue.append(queue_numbers)
-#     return queue_numbers
+# app = FastAPI()
 
-# def check_queue(numero_queue):
-#     return queue[0]==numero_queue
-
-# def drop_from_queue():
-#     queue.pop(0)
-
-
-
-#drop the first item
-#when first or second, can get out of the wrapper to get working
+# @app.post("/simulationLongModel", response_model=list[schema.DataDay])
+# async def get_Simulation_For_Days(
+#     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
+#     payload: schema.DataDayBase,
+#     db: Session = Depends(db.get_db_API),
+# ):
+#     async with semaphore:
+#         return simulation.getSimulationForDays(simulationDate=payload.simulationDate, db=db)
 
 app = FastAPI()
+semaphore = Semaphore(1)  # Limite le nombre de requêtes à 1
+
+def process_request(payload, db):
+    with semaphore:
+        return simulation.getSimulationForDays(simulationDate=payload.simulationDate, db=db)
+
+executor = ThreadPoolExecutor(max_workers=1)
 
 @app.post("/simulationLongModel", response_model=list[schema.DataDay])
 async def get_Simulation_For_Days(
@@ -49,8 +42,7 @@ async def get_Simulation_For_Days(
     payload: schema.DataDayBase,
     db: Session = Depends(db.get_db_API),
 ):
-    async with semaphore:
-        return simulation.getSimulationForDays(simulationDate=payload.simulationDate, db=db)
+    return await app.loop.run_in_executor(executor, process_request, payload, db)
 
 @app.post("/simulationShortModel", response_model=list[schema.DataHour])
 async def get_Simulation_For_Hours(
