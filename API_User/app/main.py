@@ -1,6 +1,6 @@
 from fastapi import Depends, FastAPI, Request
 from fastapi.security import OAuth2PasswordRequestForm
-from fastapi.responses import JSONResponse
+from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 from typing import Annotated
 import app.schema as schema
@@ -28,13 +28,6 @@ db.Base2.metadata.create_all(bind=db.engineUsers)
 #         return simulation.getSimulationForDays(simulationDate=payload.simulationDate, db=db)
 
 app = FastAPI()
-semaphore = Semaphore(1)  # Limite le nombre de requêtes à 1
-
-def process_request(payload, db):
-    with semaphore:
-        return simulation.getSimulationForDays(simulationDate=payload.simulationDate, db=db)
-
-executor = ThreadPoolExecutor(max_workers=1)
 
 @app.post("/simulationLongModel", response_model=list[schema.DataDay])
 async def get_Simulation_For_Days(
@@ -42,8 +35,10 @@ async def get_Simulation_For_Days(
     payload: schema.DataDayBase,
     db: Session = Depends(db.get_db_API),
 ):
-    loop = asyncio.get_event_loop()
-    return await loop.run_in_executor(executor, process_request, payload, db)
+    return StreamingResponse(
+        simulation.getSimulationForDays(db=db, simulationDate=payload.simulationDate),
+        media_type="application/json"
+    )
 
 @app.post("/simulationShortModel", response_model=list[schema.DataHour])
 async def get_Simulation_For_Hours(

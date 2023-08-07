@@ -1,8 +1,7 @@
 import app.crud as crud
 
 def getSimulationForDays(simulationDate, db):
-    data = crud.get_simulation_for_days_from_db(db=db, simulationDate=simulationDate)
-    return data
+    return crud.get_simulation_for_days_from_db(db=db, simulationDate=simulationDate)
 
 def getSimulationForDays2(simulationDate, db):
     returned_data=[]
