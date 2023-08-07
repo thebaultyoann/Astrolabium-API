@@ -7,7 +7,7 @@ import app.schema as schema
 import app.db as db
 import app.authentification as authentification
 import app.simulation as simulation
-#import asyncio
+import asyncio
 from concurrent.futures import ThreadPoolExecutor
 from threading import Semaphore
 
@@ -42,7 +42,8 @@ async def get_Simulation_For_Days(
     payload: schema.DataDayBase,
     db: Session = Depends(db.get_db_API),
 ):
-    return await app.loop.run_in_executor(executor, process_request, payload, db)
+    loop = asyncio.get_event_loop()
+    return await loop.run_in_executor(executor, process_request, payload, db)
 
 @app.post("/simulationShortModel", response_model=list[schema.DataHour])
 async def get_Simulation_For_Hours(
