@@ -17,37 +17,7 @@ services:
       - "./letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       
-  mariadb:
-    build:
-      context: ./MariaDB/
-      dockerfile: Dockerfile
-    ports:
-      - "3306:3306"
-    environment:
-    ###### modify this password, remember it and delete it from this file afterwards ######
-      - MYSQL_ROOT_PASSWORD=lol
-    container_name: mariadb
-  
-  fastapi-user:
-    build:
-      context: ./API_User/
-      dockerfile: Dockerfile
-    volumes:
-      - "./files:/files"
-    labels:
-      - 'traefik.enable=true'
-      ####################################### insert your domain name here ################
-      - 'traefik.http.routers.fastapi-user.rule=Host(`api.astrolabium.io`) && PathPrefix(`/`)'
-      - 'traefik.http.routers.fastapi-user.entrypoints=websecure'
-      - "traefik.http.routers.fastapi-user.tls.certresolver=myresolver"
-      - 'traefik.http.routers.fastapi-user.tls=true'
-      - 'traefik.http.services.fastapi-user.loadbalancer.server.port=8000'
-    container_name: fastapi-user
-    depends_on:
-      - mariadb
-    command: bash -c "sleep 10 && uvicorn app.main:app --host 0.0.0.0 --port 8000 --timeout-keep-alive 240"
-    restart: "on-failure:5"
-
+  co
   fastapi-admin:
     build:
       context: ./API_Admin/
