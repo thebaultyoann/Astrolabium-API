@@ -7,16 +7,12 @@ import app.schema as schema
 import app.db as db
 import app.authentification as authentification
 import app.simulation as simulation
-import redis
-from fastapi_queue import DistributedTaskApplyManager
-
-redis = redis.Redis.from_url("redis://localhost")
-
+import asyncio
 
 db.Base.metadata.create_all(bind=db.engineAPI)
 db.Base2.metadata.create_all(bind=db.engineUsers)
 
-
+semaphore = asyncio.Semaphore(1)
 # queue = []
 # queue_numbers = 0
 # def handle_connexions(func):
@@ -47,37 +43,14 @@ db.Base2.metadata.create_all(bind=db.engineUsers)
 
 app = FastAPI()
 
-wait = 0
-#Endpoints for data
-async def execute_task(simulationDate: str, db: Session):
-    return await simulation.getSimulationForDays(simulationDate=simulationDate, db=db)
-
 @app.post("/simulationLongModel", response_model=list[schema.DataDay])
 async def get_Simulation_For_Days(
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
     payload: schema.DataDayBase,
     db: Session = Depends(db.get_db_API),
 ):
-    success_status: bool = False
-    request = Request
-    async with DistributedTaskApplyManager(
-        redis=redis,
-        request_path=request.url.path,
-    ) as dtmanager:
-        if not dtmanager.success():
-            return JSONResponse(status_code=503, content="Service Temporarily Unavailable")
-
-        success_status, result = await dtmanager.rclt(
-            execute_task,
-            simulationDate=payload.simulationDate,
-            db=db
-        )
-        
-        if success_status:
-            return result
-        else:
-            return JSONResponse(status_code=500, content="Internal Server Error")
-
+    async with semaphore:
+        return simulation.getSimulationForDays(simulationDate=payload.simulationDate, db=db)
 
 @app.post("/simulationShortModel", response_model=list[schema.DataHour])
 async def get_Simulation_For_Hours(
