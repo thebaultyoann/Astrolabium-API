@@ -6,6 +6,7 @@ read -s password
 echo "Please enter the name of the backup you want: "
 read name
 
+sudo apt install bc
 sudo docker exec mariadb mariadb-dump -uroot -p$password --databases espf_users espf_api > $name.sql
 
 file_size=$(stat -c%s "$name.sql")
