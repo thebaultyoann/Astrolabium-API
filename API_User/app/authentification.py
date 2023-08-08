@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
@@ -36,7 +36,7 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
     else:
-        expire = datetime.utcnow() + timedelta(minutes=15)
+        expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
@@ -64,8 +64,10 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db:Ses
 async def get_current_active_user(
     current_user: Annotated[schema.User, Depends(get_current_user)]
 ):
-    if current_user.disabled:
+    if not current_user.activated:
         raise HTTPException(status_code=400, detail="Inactive user")
+    if current_user.expiration_date <= str(date.today()):
+        raise HTTPException(status_code=400, detail="Expired usern, renew your contract")
     return current_user
 
 def login_the_user_for_access_token(form_data,db):

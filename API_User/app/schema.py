@@ -75,7 +75,8 @@ class UserPassword(User):
     password_hashed: str
 
 class UserActivated(UserPassword):
-    disabled: bool | None = None
+    activated: bool | None = None
+    expiration_date: date
 
 
 
