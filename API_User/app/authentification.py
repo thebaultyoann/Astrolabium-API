@@ -85,6 +85,10 @@ def login_the_user_for_access_token(form_data,db):
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
+    if not user.activated:
+        raise HTTPException(status_code=400, detail="Inactive user")
+    if user.expiration_date<=date.today():
+        raise HTTPException(status_code=400, detail="Expired user, renew your contract")
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
         data={"sub": user.username}, expires_delta=access_token_expires
