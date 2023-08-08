@@ -62,11 +62,11 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], db:Ses
     return user
 
 async def get_current_active_user(
-    current_user: Annotated[schema.User, Depends(get_current_user)]
+    current_user: Annotated[schema.UserActivated, Depends(get_current_user)]
 ):
     if not current_user.activated:
         raise HTTPException(status_code=400, detail="Inactive user")
-    if current_user.expiration_date <= str(date.today()):
+    if current_user.expiration_date <= date.today():
         raise HTTPException(status_code=400, detail="Expired user, renew your contract")
     return current_user
 
