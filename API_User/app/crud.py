@@ -21,7 +21,8 @@ def get_user(db: Session, username: str):
         id=user_dict.id,
         username=user_dict.username,
         password_hashed=user_dict.password_hashed,
-        disabled=user_dict.disabled
+        activated=user_dict.activated,
+        expiration_date=user_dict.expiration_date
     )
 
 def get_user_admin(db: Session, username: str):

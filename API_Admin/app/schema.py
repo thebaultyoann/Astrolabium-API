@@ -6,6 +6,18 @@ from datetime import date
 class validationOnUpload(BaseModel):
     uploadSucess: bool      
 
+class validationOnUpdate(BaseModel):
+    updateSucess: bool 
+
+class validationOnDelete(BaseModel):
+    deleteSucess: bool          
+
+class DataDayDeleteInput(BaseModel):
+        simulationDate: date
+
+class DataHourDeleteInput(BaseModel):
+        simulationDate: date
+
 class DataDayInput(BaseModel):
         simulationDate: date
         sample: int
