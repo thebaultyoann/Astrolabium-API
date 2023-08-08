@@ -116,11 +116,12 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(8) DEFAULT NULL,
   `password_hashed` varchar(60) DEFAULT NULL,
-  `disabled` tinyint(1) DEFAULT NULL,
+  `activated` tinyint(1) DEFAULT NULL,
+  `expiration_date` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ix_users_username` (`username`),
   KEY `ix_users_id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 --
 -- Dumping data for table `users`
@@ -129,9 +130,10 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` VALUES
-(1,'username','$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW',0),
-(2,'itsatest','$3c$47$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW',1),
-(3,'yoannthe','$2b$12$/aCCH27qKUlmsJYB3eskfuRMtq3Ri60pKM0Q0GMnyp39CVi/GcEgS',0);
+(1,'username','$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW',1,'2023-08-08'),
+(2,'usernam2','$2b$12$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW',1,'2023-08-07'),
+(3,'itsatest','$3c$47$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW',0,'2023-12-20'),
+(4,'yoannthe','$2b$12$/aCCH27qKUlmsJYB3eskfuRMtq3Ri60pKM0Q0GMnyp39CVi/GcEgS',1,'2023-08-20');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
