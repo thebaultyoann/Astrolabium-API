@@ -71,7 +71,7 @@ CREATE TABLE `useradmin` (
   `username` varchar(5) DEFAULT NULL,
   `password_hashed` varchar(60) DEFAULT NULL,
   `twofa_key` varchar(32) DEFAULT NULL,
-  `unique_contraint_column` INT DEFAULT 1 UNIQUE,
+  `unique_constraint_column` INT DEFAULT 1 UNIQUE,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ix_useradmin_username` (`username`),
   KEY `ix_useradmin_id` (`id`)
@@ -79,24 +79,23 @@ CREATE TABLE `useradmin` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 
-DELIMITER //
+DELIMITER $$
+
 CREATE TRIGGER enforce_unique_value_on_insert
 BEFORE INSERT ON `useradmin`
 FOR EACH ROW
 BEGIN
     SET NEW.unique_constraint_column = 1;
 END;
-//
-DELIMITER ;
+$$
 
-DELIMITER //
 CREATE TRIGGER enforce_unique_value_on_update
 BEFORE UPDATE ON `useradmin`
 FOR EACH ROW
 BEGIN
     SET NEW.unique_constraint_column = 1;
 END;
-//
+$$
 DELIMITER ;
 
 LOCK TABLES `useradmin` WRITE;
