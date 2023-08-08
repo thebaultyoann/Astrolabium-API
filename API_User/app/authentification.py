@@ -67,7 +67,7 @@ async def get_current_active_user(
     if not current_user.activated:
         raise HTTPException(status_code=400, detail="Inactive user")
     if current_user.expiration_date <= str(date.today()):
-        raise HTTPException(status_code=400, detail="Expired usern, renew your contract")
+        raise HTTPException(status_code=400, detail="Expired user, renew your contract")
     return current_user
 
 def login_the_user_for_access_token(form_data,db):
