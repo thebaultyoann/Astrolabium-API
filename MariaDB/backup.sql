@@ -78,8 +78,6 @@ CREATE TABLE `useradmin` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-LOCK TABLES `useradmin` WRITE;
-/*!40000 ALTER TABLE `useradmin` DISABLE KEYS */;
 
 DELIMITER //
 CREATE TRIGGER enforce_unique_value_on_insert
@@ -101,14 +99,16 @@ END;
 //
 DELIMITER ;
 
+LOCK TABLES `useradmin` WRITE;
+/*!40000 ALTER TABLE `useradmin` DISABLE KEYS */;
 
 INSERT INTO `useradmin` VALUES
 (1,'tomas','$2b$12$SHXJGzM4i.1fnWxRV2CmNuPRvJVktMVScppmHs0F5wQzUGJ8aVKM.','MKFKWT6AUPTLENUJ2TREDG65IHN6EDOZ',1);
           
-          
-
+        
 /*!40000 ALTER TABLE `useradmin` ENABLE KEYS */;
 UNLOCK TABLES;
+
 
 DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
