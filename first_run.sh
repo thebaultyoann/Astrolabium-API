@@ -8,10 +8,11 @@ sudo git clone https://github.com/Linker175/CLI-Admin-test.git
 cd CLI-Admin-test
 bash cli_first_run.sh
 
+echo ''
 echo "Please enter the email you want for your certificate renewal"
 read mail
 
-
+echo ''
 echo "Please enter the password you want for the root user of mariadb"
 read -s rootpassword
 
