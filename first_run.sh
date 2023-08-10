@@ -6,7 +6,7 @@ cd ..
 sudo git clone https://github.com/Linker175/CLI-Admin-test.git
 
 cd CLI-Admin-test
-sudo bash cli_first_run.sh
+bash cli_first_run.sh
 
 echo "Please enter the password you want for the root user of mariadb"
 read -s rootpassword
