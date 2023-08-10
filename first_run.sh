@@ -26,9 +26,14 @@ sudo docker-compose up -d
 
 sed -i '/MYSQL_ROOT_PASSWORD/s/=.*$/=/' docker-compose.yml    
 
+echo ''
+echo ''
 echo 'Here is you 2FA secret, take it and store it on your computer'
 secret=$(python3 bash/generate_2FA_secret.py)
 echo $secret
+
+echo ''
+echo ''
 
 echo "Please enter the name of admin_user you want for the API: "
 read adminname
