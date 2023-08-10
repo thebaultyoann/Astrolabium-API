@@ -4,15 +4,17 @@ sudo bash bash/install_docker.sh
 
 cd ..
 sudo git clone https://github.com/Linker175/CLI-Admin-test.git
-cd Astrolabium-API2
 
-sudo bash ../CLI-Admin-test/cli_first_run.sh
+cd CLI-Admin-test
+sudo bash cli_first_run.sh
 
 echo "Please enter the password you want for the root user of mariadb"
 read -s rootpassword
 
 echo "Please enter the email you want for your certificate renewal"
 read mail
+
+cd Astrolabium-API2
 
 sed -i '/MYSQL_ROOT_PASSWORD/s/=.*$/=/' docker-compose.yml    
 sed -i '/certificatesresolvers.myresolver.acme.email=/s/=.*$/=/' docker-compose.yml  
