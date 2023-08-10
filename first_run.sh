@@ -16,6 +16,8 @@ echo ''
 echo "Please enter the password you want for the root user of mariadb"
 read -s rootpassword
 
+echo ''
+
 cd ..
 cd Astrolabium-API2
 
