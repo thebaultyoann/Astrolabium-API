@@ -75,7 +75,7 @@ CREATE TABLE `useradmin` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `ix_useradmin_username` (`username`),
   KEY `ix_useradmin_id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 
@@ -98,15 +98,6 @@ END;
 $$
 DELIMITER ;
 
-LOCK TABLES `useradmin` WRITE;
-/*!40000 ALTER TABLE `useradmin` DISABLE KEYS */;
-
-INSERT INTO `useradmin` VALUES
-(1,'tomas','$2b$12$SHXJGzM4i.1fnWxRV2CmNuPRvJVktMVScppmHs0F5wQzUGJ8aVKM.','MKFKWT6AUPTLENUJ2TREDG65IHN6EDOZ',1);
-          
-        
-/*!40000 ALTER TABLE `useradmin` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 DROP TABLE IF EXISTS `users`;

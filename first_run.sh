@@ -40,11 +40,17 @@ echo ''
 echo "Please enter the name of admin_user you want for the API: "
 read adminname
 
+echo ''
+
 echo "Please enter the password of this admin_user you want for the API:"
 read -s adminpassword
 
+echo ''
+
 echo "Please enter the name of user you want for the CLI: "
 read cliname
+
+echo ''
 
 echo "Please enter the password you want for the CLI:"
 read -s clipassword
@@ -58,6 +64,10 @@ echo $diditwork
 
 sudo bash bash/add_database_user.sh  #create the mariadb users for API
 
+echo "MariaDB users created"
+
 sudo bash bash/add_cli_user.sh $cliname $clipassword $mariadb_ip $rootpassword #create cli user -> a MariaDB user
+
+echo "CLI user created"
 
 echo "Installation terminée"

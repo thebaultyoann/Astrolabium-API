@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, Column, Integer, String, Boolean, Date
 from passlib.context import CryptContext
-from sqlalchemy.orm import sessionmaker, Session
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker, Session, declarative_base
+
 import sys
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
