@@ -21,7 +21,7 @@ cd Astrolabium-API2
 
 sed -i '/MYSQL_ROOT_PASSWORD/s/=.*$/=/' docker-compose.yml    
 sed -i '/certificatesresolvers.myresolver.acme.email=/s/=.*$/=/' docker-compose.yml  
-sed -i "s/certificatesresolvers.myresolver.acme.email=/&\"${mail}\"/" docker-compose.yml
+sed -i "s/certificatesresolvers.myresolver.acme.email=/&${mail}\"/" docker-compose.yml
 sed -i "s/MYSQL_ROOT_PASSWORD=/&${rootpassword}/" docker-compose.yml
 
 sudo docker-compose up -d 
