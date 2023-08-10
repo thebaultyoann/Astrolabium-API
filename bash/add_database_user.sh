@@ -1,7 +1,8 @@
 #!/bin/bash
 
-#Get the data from the Python file to access the variables
-source files/variable.py
+#Get the data from the Python file to access the variables -> only the 1 or 10 first lines not to show errors 
+source <(head - 16 files/variable.py)
+source <(head - 10 files_user/variable.py
 
 #update users inside mariadb
 
@@ -26,5 +27,5 @@ EOF
 #For Admin api
 sudo docker exec -i $DB_Container_Name mariadb -u root -p$Mariadb_Root_Password <<EOF
 CREATE USER '$DB_Username_APIAdmin'@'%' IDENTIFIED BY '$DB_Password_APIAdmin';
-GRANT SELECT, INSERT, UPDATE, DELETE ON $DB_Name_For_Api_Tables.* TO '$DB_Username_APIAdmin'@'%';
+GRANT INSERT, UPDATE, DELETE ON $DB_Name_For_Api_Tables.* TO '$DB_Username_APIAdmin'@'%';
 EOF

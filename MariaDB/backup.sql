@@ -114,7 +114,7 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(8) DEFAULT NULL,
+  `username` varchar(14) DEFAULT NULL,
   `password_hashed` varchar(60) DEFAULT NULL,
   `activated` tinyint(1) DEFAULT NULL,
   `expiration_date` date DEFAULT NULL,

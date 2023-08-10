@@ -114,7 +114,8 @@ async def login_for_access_token(
     return authentification.login_the_user_for_access_token(form_data=form_data,db=db)
 
 @app.get("/user/me/", response_model=schema.User)
-async def read_user_me(
+async def read_user_me( 
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)]
 ):
     return current_user
+

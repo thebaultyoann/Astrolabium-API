@@ -11,7 +11,7 @@ services:
       - "--entrypoints.websecure.address=:443" 
       - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
       ################################################ insert your email here ################
-      - "--certificatesresolvers.myresolver.acme.email=thebaultyoann56@gmail.com"
+      - "--certificatesresolvers.myresolver.acme.email="thebaultyoann56@gmail.com"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     volumes:
       - "./letsencrypt:/letsencrypt"
@@ -24,8 +24,8 @@ services:
     ports:
       - "3306:3306"
     environment:
-    ###### modify this password, remember it and delete it from this file afterwards ######
-      - MYSQL_ROOT_PASSWORD=lol
+     ##### insert mariadb root password here #####
+      - MYSQL_ROOT_PASSWORD=
     container_name: mariadb
 
   fastapi-user:
@@ -33,7 +33,7 @@ services:
       context: ./API_User/
       dockerfile: Dockerfile
     volumes:
-      - "./files:/files"
+      - "./files_user:/files"
     labels:
       - 'traefik.enable=true'
       ####################################### insert your domain name here ################
