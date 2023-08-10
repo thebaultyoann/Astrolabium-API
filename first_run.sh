@@ -14,6 +14,7 @@ read -s rootpassword
 echo "Please enter the email you want for your certificate renewal"
 read mail
 
+cd ..
 cd Astrolabium-API2
 
 sed -i '/MYSQL_ROOT_PASSWORD/s/=.*$/=/' docker-compose.yml    
