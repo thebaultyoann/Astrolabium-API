@@ -2,9 +2,9 @@
 
 sudo bash bash/install_docker.sh 
 
-sudo cd ..
+cd ..
 sudo git clone https://github.com/Linker175/CLI-Admin-test.git
-sudo cd Astrolabium-API2
+cd Astrolabium-API2
 
 sudo bash ../CLI-Admin-test/cli_first_run.sh
 
