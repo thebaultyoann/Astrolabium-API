@@ -30,7 +30,8 @@ sudo docker-compose up -d
 
 sed -i '/MYSQL_ROOT_PASSWORD/s/=.*$/=/' docker-compose.yml    
 
-source ~/.bashrc
+eval "$(cat ~/.bashrc | tail -n +10)"
+
 echo ''
 echo ''
 echo 'Here is you 2FA secret, take it and store it on your computer'
