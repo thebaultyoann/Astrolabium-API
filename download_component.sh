@@ -15,8 +15,6 @@ sudo apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xcbcb082a1bb943db
 curl -LsS https://downloads.mariadb.com/MariaDB/mariadb_repo_setup | sudo bash
 
 sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get dist-upgrade
 
 sudo apt-get install libmariadb3
 sudo apt-get install libmariadb-dev
