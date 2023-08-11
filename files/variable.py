@@ -1,6 +1,3 @@
-#MariaDBRootPassword to be deleted after!
-Mariadb_Root_Password="lol"
-
 #For Admin User
 DB_Username_UserAdmin="admin"
 DB_Password_UserAdmin="password"
