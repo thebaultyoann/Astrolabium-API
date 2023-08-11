@@ -1,9 +1,8 @@
 #!/bin/bash
 
 #Get the data from the Python file to access the variables -> only the 1 or 10 first lines not to show errors 
-source <(head - 16 files/variable.py)
-source <(head - 10 files_user/variable.py
-
+source <(sed -n '1,10p' files/variable.py)
+source <(sed -n '1,16p' files/variable.py)
 #update users inside mariadb
 
 #For client users

@@ -61,8 +61,8 @@ sudo bash bash/add_database_user.sh  #create the mariadb users for API
 
 echo "MariaDB users created"
 
-sudo bash bash/add_cli_user.sh $cliname $clipassword $mariadb_ip $rootpassword #create cli user -> a MariaDB user
+sudo bash bash/add_cli_user.sh $cliname $clipassword $rootpassword #create cli user -> a MariaDB user
 
 echo "CLI user created"
 
-echo "Installation terminée"
+echo "Installation terminated"
