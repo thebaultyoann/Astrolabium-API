@@ -67,4 +67,11 @@ sudo bash bash/add_cli_user.sh $cliname $clipassword $rootpassword #create cli u
 
 echo "CLI user created"
 
+cd ../CLI-Admin-test
+
+sudo bash get_mariadb_ip.sh
+
+cd ../Astrolabium-API2
+
 echo "Installation terminated"
+

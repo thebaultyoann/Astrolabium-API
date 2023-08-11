@@ -2,7 +2,7 @@ from sqlalchemy import create_engine,Column, Integer, Date, JSON, String, Boolea
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 import sys
-sys.path.append('../../files_user/')
+sys.path.append('../../files/')
 from variable import DB_Username_API, DB_Password_API, DB_Username_Users, DB_Password_Users, DB_Container_Name, DB_Name_For_Api_Tables, DB_Name_For_Users_Tables
 
 
