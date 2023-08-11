@@ -3,6 +3,9 @@ $2 #password
 $3 #mariadbip
 $4 #mariadb root password
 
+
+source ~/CLI-User-test/venv/bin/activate
+
 password_hash=$(python3 bash/generate_cli_hash.py $2)
 
 sudo docker exec -i mariadb mariadb -u root -p$4 <<EOF
