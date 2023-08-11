@@ -4,7 +4,7 @@ $3 #mariadbip
 $4 #mariadb root password
 
 
-source ~/CLI-User-test/venv/bin/activate
+source ~/CLI-Admin-test/venv/bin/activate
 
 password_hash=$(python3 bash/generate_cli_hash.py $2)
 
