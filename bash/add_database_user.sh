@@ -25,5 +25,5 @@ EOF
 #For Admin api
 sudo docker exec -i $DB_Container_Name mariadb -u root -p$1 <<EOF
 CREATE USER '$DB_Username_APIAdmin'@'%' IDENTIFIED BY '$DB_Password_APIAdmin';
-GRANT INSERT, UPDATE, DELETE ON $DB_Name_For_Api_Tables.* TO '$DB_Username_APIAdmin'@'%';
+GRANT SELECT, INSERT, UPDATE, DELETE ON $DB_Name_For_Api_Tables.* TO '$DB_Username_APIAdmin'@'%';
 EOF
