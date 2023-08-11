@@ -1,13 +1,4 @@
 #!/bin/bash
-
-sudo bash bash/install_docker.sh 
-
-cd ..
-sudo git clone https://github.com/Linker175/CLI-Admin-test.git
-
-cd CLI-Admin-test
-bash cli_first_run.sh
-
 echo ''
 echo "Please enter the email you want for your certificate renewal"
 read mail
@@ -28,9 +19,9 @@ sed -i "s/MYSQL_ROOT_PASSWORD=/&${rootpassword}/" docker-compose.yml
 
 sudo docker-compose up -d 
 
-sed -i '/MYSQL_ROOT_PASSWORD/s/=.*$/=/' docker-compose.yml    
+sed -i '/MYSQL_ROOT_PASSWORD/s/=.*$/=/' docker-compose.yml  
 
-eval "$(cat ~/.bashrc | tail -n +10)"
+source ~/.bashrc
 
 echo ''
 echo ''
