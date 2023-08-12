@@ -10,4 +10,7 @@ password = sys.argv[1] if len(sys.argv) > 1 else None
 
 password = get_password_hash(password)
 password = get_password_hash(password)
-print(password[:32])
+password = password[:32]
+print(password)
+
+
