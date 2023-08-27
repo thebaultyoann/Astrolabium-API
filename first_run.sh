@@ -10,7 +10,7 @@ read -s rootpassword
 echo ''
 
 cd ..
-cd Astrolabium-API2 
+cd Astrolabium-API 
 
 sed -i '/MYSQL_ROOT_PASSWORD/s/=.*$/=/' docker-compose.yml    
 sed -i '/certificatesresolvers.myresolver.acme.email=/s/=.*$/=/' docker-compose.yml  

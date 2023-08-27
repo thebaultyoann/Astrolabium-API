@@ -31,7 +31,6 @@ app = FastAPI()
 
 @app.post("/simulationLongModel", response_model=list[schema.DataDay])
 async def get_Simulation_For_Days(
-    token: Annotated[str, Depends(authentification.oauth2_scheme)],
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
     payload: schema.DataDayBase,
     db: Session = Depends(db.get_db_API),
@@ -43,7 +42,6 @@ async def get_Simulation_For_Days(
 
 @app.post("/simulationShortModel", response_model=list[schema.DataHour])
 async def get_Simulation_For_Hours(
-    token: Annotated[str, Depends(authentification.oauth2_scheme)],
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
     payload: schema.DataHourBase,
     db: Session = Depends(db.get_db_API)
@@ -52,7 +50,6 @@ async def get_Simulation_For_Hours(
 
 @app.post("/simulationSampleLongModel", response_model=schema.DataDay)
 def get_Simulation_Sample_For_Days(
-    token: Annotated[str, Depends(authentification.oauth2_scheme)],
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
     payload : schema.DataDaySample,
     db:Session = Depends(db.get_db_API)
@@ -61,7 +58,6 @@ def get_Simulation_Sample_For_Days(
 
 @app.post("/simulationSampleShortModel", response_model=schema.DataHour)
 def get_Simulation_Sample_For_Hours(
-    token: Annotated[str, Depends(authentification.oauth2_scheme)],
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
     payload : schema.DataHourSample,
     db:Session = Depends(db.get_db_API)
@@ -70,7 +66,6 @@ def get_Simulation_Sample_For_Hours(
 
 @app.post("/simulationTenThousandSample", response_model=list[schema.DataDay])
 def get_Simulation_Sample(
-    token: Annotated[str, Depends(authentification.oauth2_scheme)],
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
     payload : schema.DataDayTenThousandSample,
     db:Session = Depends(db.get_db_API)
@@ -79,7 +74,6 @@ def get_Simulation_Sample(
 
 @app.post("/simulationThousandSample", response_model=list[schema.DataDay])
 def get_Simulation_Sample(
-    token: Annotated[str, Depends(authentification.oauth2_scheme)],
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
     payload : schema.DataDayThousandSample,
     db:Session = Depends(db.get_db_API)
@@ -88,7 +82,6 @@ def get_Simulation_Sample(
 
 @app.post("/simulationHundredSample", response_model=list[schema.DataDay])
 def get_Simulation_Sample(
-    token: Annotated[str, Depends(authentification.oauth2_scheme)],
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)],
     payload : schema.DataDayHundredSample,
     db:Session = Depends(db.get_db_API)
@@ -97,7 +90,6 @@ def get_Simulation_Sample(
 
 @app.post("/simulationLongModelForTargetDay", response_model=list[schema.DataDayForTargetedDay])
 async def get_Simulation_For_Target_Day(
-    token: Annotated[str, Depends(authentification.oauth2_scheme)],
     current_user: Annotated[schema.User,Depends(authentification.get_current_active_user)],
     payload: schema.DataDayTargetedDay,
     db:Session = Depends(db.get_db_API)
@@ -106,7 +98,6 @@ async def get_Simulation_For_Target_Day(
 
 @app.post("/simulationForTargetHour", response_model=list[schema.DataHourForTargetedHour])
 async def get_Simulation_For_Target_Hour(
-    token: Annotated[str, Depends(authentification.oauth2_scheme)],
     current_user: Annotated[schema.User,Depends(authentification.get_current_active_user)],
     payload: schema.DataHourTargetedHour,
     db:Session = Depends(db.get_db_API)
@@ -124,7 +115,6 @@ async def login_for_access_token(
 
 @app.get("/user/me/", response_model=schema.User)
 async def read_user_me( 
-    token: Annotated[str, Depends(authentification.oauth2_scheme)],
     current_user: Annotated[schema.User, Depends(authentification.get_current_active_user)]
 ):
     return current_user

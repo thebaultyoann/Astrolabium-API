@@ -7,7 +7,7 @@ Install Git and Pull the project
 ```Shell
 sudo apt-get update
 sudo apt-get install git
-git clone https://github.com/Linker175/Astrolabium-API2.git
+git clone https://github.com/Linker175/Astrolabium-API.git
 cd Astrolabium-API2
 ```
 

@@ -2,7 +2,7 @@
 sudo bash bash/install_docker.sh 
 
 cd ..
-sudo git clone https://github.com/Linker175/CLI-Admin-test.git
+sudo git clone https://github.com/Linker175/CLI-Admin.git
 
 sudo apt update
 sudo apt install software-properties-common
